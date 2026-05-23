@@ -1477,6 +1477,7 @@ document.addEventListener('keydown',(e)=>{
 var cdBody=document.getElementById('cd-chat-body');
 var cdIn=document.getElementById('cd-chat-in');
 var cdPanel=document.getElementById('cd-chat-panel');
+var API_URL='https://cd-chat.stillseedacademy.workers.dev';
 
 function cdToggle(){
   cdPanel.classList.toggle('active');
@@ -1485,10 +1486,14 @@ function cdToggle(){
   }
 }
 
-function cdAdd(text,isUser){
+function cdAdd(text,isUser,isHTML){
   var d=document.createElement('div');
   d.className='msg '+(isUser?'user':'bot');
-  d.innerHTML=text;
+  if(isHTML){
+    d.innerHTML=text;
+  }else{
+    d.textContent=text;
+  }
   cdBody.appendChild(d);
   cdBody.scrollTop=cdBody.scrollHeight;
 }
@@ -1507,83 +1512,58 @@ function cdRemoveTyping(){
   if(t)t.remove();
 }
 
-function cdReply(q){
-  var q2=q.toLowerCase();
-  if(q2.indexOf('what is classroom deconstruct')>-1||q2.indexOf('what is cd')>-1){
-    return "Classroom Deconstruct is a 10-week facilitator training focused on inner transformation. Through five pillars — LEAD, STAY, RISE, BURN, HOLD — you learn to hold space for others while doing your own deep work.";
-  }
-  if(q2.indexOf('pillar')>-1){
-    return "The Five Pillars are:<br><br><b>LEAD</b> — Listen, Engage, Awaken, Discern<br><b>STAY</b> — Settle, Track, Allow, Yield<br><b>RISE</b> — Root, Inspire, Serve, Embody<br><b>BURN</b> — Break, Unmask, Reveal, Nourish<br><b>HOLD</b> — Hear, Offer, Lean, Deepen<br><br>These aren't steps — they're invitations to different kinds of honesty.";
-  }
-  if(q2.indexOf('lead')>-1){
-    return "LEAD is about the journey inward before leading others. You'll learn stillness, self-awareness, and how to choose from clarity rather than default patterns.";
-  }
-  if(q2.indexOf('stay')>-1){
-    return "STAY is the art of presence under pressure — remaining with discomfort and emotion instead of escaping. We settle not to escape reality, but to meet it from the ground.";
-  }
-  if(q2.indexOf('rise')>-1){
-    return "RISE is about reclaiming authenticity, vision, and purpose. Not about climbing higher, but aligning deeper — with your values, your fire, and your service.";
-  }
-  if(q2.indexOf('burn')>-1){
-    return "BURN is about dismantling what no longer serves — breaking false structures, unmasking roles, revealing what's raw, and nourishing what remains. Breakage isn't failure; it's the beginning of something real.";
-  }
-  if(q2.indexOf('hold')>-1){
-    return "HOLD is where the work becomes real — learning to truly listen, offer space without rescuing, and deepen for integrity, not intensity. To hold is to remain.";
-  }
-  if(q2.indexOf('apply')>-1||q2.indexOf('join')>-1||q2.indexOf('start')>-1){
-    return "Click the 'Apply to Join' button in the invitation section. The 10-week program includes live sessions, peer practice, somatic work, and a final practicum. No prior experience required — only willingness to do your own inner work.";
-  }
-  if(q2.indexOf('facilitator')>-1||q2.indexOf('role')>-1){
-    return "A CD Facilitator is not a teacher or authority. You are a space holder who models presence over perfection. You listen more than you speak, trust the group's wisdom, and embody what you teach.";
-  }
-  if(q2.indexOf('certif')>-1){
-    return "Certification requires completing all modules, weekly reflections, a 60-90 minute final practicum (passing score 22+/30), peer feedback, and a final reflection. It's about embodiment, not performance.";
-  }
-  if(q2.indexOf('training')>-1||q2.indexOf('week')>-1||q2.indexOf('program')>-1){
-    return "The 10-week training has three phases:<br><br><b>Weeks 1-2:</b> Foundation — philosophy, safety, trauma sensitivity.<br><b>Weeks 3-7:</b> Pillar Embodiment — deep work through all five pillars.<br><b>Weeks 8-10:</b> Mastery & Integration — practicum, assessment, certification.";
-  }
-  if(q2.indexOf('cost')>-1||q2.indexOf('price')>-1||q2.indexOf('pay')>-1||q2.indexOf('fee')>-1||q2.indexOf('money')>-1){
-    return "Pricing is shared during the application review. We offer payment plans to make this work accessible. Apply and we'll discuss everything on a discovery call.";
-  }
-  if(q2.indexOf('unlearn')>-1){
-    return "Unlearning is letting go of what was never truly yours — inherited beliefs, performed roles, survival patterns that once protected you but now constrain you.";
-  }
-  if(q2.indexOf('unmask')>-1){
-    return "Unmasking is removing the false roles you've worn to survive. The mask didn't protect you — it protected your image. Beneath it, you are still here.";
-  }
-  if(q2.indexOf('transform')>-1){
-    return "Transformation in CD isn't about becoming someone else. It's about returning to who you've always been — stripping away false layers to reveal the authentic individual within.";
-  }
-  if(q2.indexOf('hello')>-1||q2.indexOf('hi')>-1){
-    return "Hello. I'm here to guide you through Classroom Deconstruct. What would you like to explore?";
-  }
-  if(q2.indexOf('help')>-1){
-    return "I can answer questions about:<br>• What CD is<br>• The Five Pillars<br>• The training structure<br>• How to apply<br>• The facilitator role<br>• Certification<br><br>What would you like to know?";
-  }
-  return "I don't have a specific answer for that yet. Could you rephrase, or ask about the pillars, training, application process, or facilitator role?";
-}
-
 function cdSend(){
   var text=cdIn.value.trim();
   if(!text)return;
-  cdAdd(text,true);
+  cdAdd(text,true,false);
   cdIn.value='';
   cdTyping();
-  setTimeout(function(){
+
+  fetch(API_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({message:text})
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){
     cdRemoveTyping();
-    cdAdd(cdReply(text),false);
-  },1000);
+    if(data.reply){
+      cdAdd(data.reply,false,true);
+    }else if(data.error){
+      cdAdd('Sorry, I encountered an error. Please try again.',false,false);
+    }
+  })
+  .catch(function(err){
+    cdRemoveTyping();
+    cdAdd('Connection issue. Please check your internet and try again.',false,false);
+    console.error('Chat error:',err);
+  });
 }
 
 function cdChip(text){
-  cdAdd(text,true);
+  cdAdd(text,true,false);
   cdTyping();
-  setTimeout(function(){
+
+  fetch(API_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({message:text})
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){
     cdRemoveTyping();
-    cdAdd(cdReply(text),false);
-  },1000);
+    if(data.reply){
+      cdAdd(data.reply,false,true);
+    }else{
+      cdAdd('Sorry, something went wrong.',false,false);
+    }
+  })
+  .catch(function(err){
+    cdRemoveTyping();
+    cdAdd('Connection issue. Please try again.',false,false);
+  });
 }
-</script>
+</script></script>
 
 </body>
 </html>
