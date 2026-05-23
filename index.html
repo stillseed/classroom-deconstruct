@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Classroom Deconstruct — Unlearn. Unmask. Transform.</title>
+<meta name="description" content="A 10-week facilitator training for inner transformation. Unlearn what was never yours. Unmask the false roles. Transform from the inside out.">
+<meta name="keywords" content="facilitator training, inner transformation, unlearning, personal growth, classroom deconstruct">
+<meta property="og:title" content="Classroom Deconstruct — Unlearn. Unmask. Transform.">
+<meta property="og:description" content="A 10-week immersive training for individuals ready to lead with presence, truth, and depth.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://classroomdeconstruct.com">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
@@ -28,7 +35,6 @@ body{
   font-weight:300;
   line-height:1.6;
   overflow-x:hidden;
-  cursor:none;
 }
 
 ::selection{background:rgba(201,168,124,0.2);color:var(--text)}
@@ -36,12 +42,18 @@ body{
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:#1a1a1a;border-radius:2px}
 
-/* LENIS-STYLE SMOOTH SCROLL */
-html.lenis, html.lenis body{height:auto}
-.lenis.lenis-smooth{scroll-behavior:auto !important}
-.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
-.lenis.lenis-stopped{overflow:hidden}
-.lenis.lenis-scrolling iframe{pointer-events:none}
+/* SUBTLE NOISE TEXTURE */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:99997;
+  pointer-events:none;
+  opacity:0.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  background-size:256px 256px;
+}
 
 /* CURSOR */
 .cursor{
@@ -57,6 +69,10 @@ html.lenis, html.lenis body{height:auto}
 }
 .cursor.hover{width:48px;height:48px;background:transparent;border:1px solid var(--accent);mix-blend-mode:normal}
 
+@media(max-width:768px){
+  .cursor{display:none}
+}
+
 /* MOBILE MENU */
 .menu-toggle{
   display:none;
@@ -66,7 +82,7 @@ html.lenis, html.lenis body{height:auto}
   border:none;
   padding:8px;
   z-index:101;
-  cursor:none;
+  cursor:pointer;
 }
 .menu-toggle span{
   display:block;
@@ -111,7 +127,7 @@ html.lenis, html.lenis body{height:auto}
 .mobile-menu.open a:nth-child(5){transition-delay:.42s}
 .mobile-menu a:hover{color:var(--accent)}
 
-/* LOADER */
+/* LOADER — FASTER */
 .loader{
   position:fixed;inset:0;
   background:var(--bg);
@@ -120,29 +136,28 @@ html.lenis, html.lenis body{height:auto}
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  transition:opacity 1.2s cubic-bezier(.77,0,.175,1),visibility 1.2s;
+  transition:opacity .8s cubic-bezier(.77,0,.175,1),visibility .8s;
 }
 .loader.done{opacity:0;visibility:hidden;pointer-events:none}
 .loader-logo{
   width:140px;
   opacity:0;
-  animation:loaderIn 1.5s cubic-bezier(.23,1,.32,1) .3s forwards;
-  
+  animation:loaderIn 1s cubic-bezier(.23,1,.32,1) .2s forwards;
 }
 .loader-bar{
   width:0;height:1px;
   background:var(--accent);
-  margin-top:3rem;
-  animation:loaderBar 2s cubic-bezier(.77,0,.175,1) .8s forwards;
+  margin-top:2rem;
+  animation:loaderBar 1.2s cubic-bezier(.77,0,.175,1) .5s forwards;
 }
 .loader-text{
-  margin-top:2rem;
+  margin-top:1.5rem;
   font-size:.65rem;
   letter-spacing:6px;
   text-transform:uppercase;
   color:var(--text-faint);
   opacity:0;
-  animation:fadeIn 1s ease 2s forwards;
+  animation:fadeIn .8s ease 1.2s forwards;
 }
 @keyframes loaderIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes loaderBar{to{width:100px}}
@@ -159,7 +174,7 @@ html.lenis, html.lenis body{height:auto}
   align-items:center;
   transition:all .8s cubic-bezier(.77,0,.175,1);
   opacity:0;
-  animation:navIn 1s ease 3s forwards;
+  animation:navIn 1s ease 1.8s forwards;
 }
 .nav.visible{
   background:rgba(6,6,6,.9);
@@ -236,8 +251,7 @@ html.lenis, html.lenis body{height:auto}
 .hero-logo{
   width:280px;
   opacity:0;
-  
-  animation:heroLogoIn 2s cubic-bezier(.23,1,.32,1) 2.5s forwards;
+  animation:heroLogoIn 2s cubic-bezier(.23,1,.32,1) 1.2s forwards;
 }
 @keyframes heroLogoIn{
   from{opacity:0;transform:translateY(40px) scale(.9)}
@@ -253,7 +267,7 @@ html.lenis, html.lenis body{height:auto}
   position:relative;
   z-index:2;
   opacity:0;
-  animation:fadeUp 1.5s ease 3.2s forwards;
+  animation:fadeUp 1.5s ease 1.8s forwards;
 }
 .hero h1 em{
   font-style:italic;
@@ -270,7 +284,7 @@ html.lenis, html.lenis body{height:auto}
   position:relative;
   z-index:2;
   opacity:0;
-  animation:fadeUp 1.5s ease 3.5s forwards;
+  animation:fadeUp 1.5s ease 2s forwards;
 }
 .hero-scroll{
   position:absolute;
@@ -282,7 +296,7 @@ html.lenis, html.lenis body{height:auto}
   align-items:center;
   gap:.75rem;
   opacity:0;
-  animation:fadeUp 1s ease 4s forwards;
+  animation:fadeUp 1s ease 2.4s forwards;
   pointer-events:none;
 }
 .hero-scroll span{
@@ -425,7 +439,7 @@ html.lenis, html.lenis body{height:auto}
   justify-content:space-between;
   align-items:center;
   padding:3rem 0;
-  cursor:none;
+  cursor:pointer;
   transition:all .4s ease;
 }
 .pillar:hover .pillar-header{padding-left:1.5rem}
@@ -701,7 +715,6 @@ html.lenis, html.lenis body{height:auto}
   width:100px;
   margin-bottom:3rem;
   opacity:.5;
-  
 }
 .cta h2{
   font-family:'Cormorant Garamond',serif;
@@ -731,7 +744,7 @@ html.lenis, html.lenis body{height:auto}
   position:relative;
   overflow:hidden;
   background:transparent;
-  cursor:none;
+  cursor:pointer;
 }
 .cta-btn::before{
   content:'';position:absolute;
@@ -742,6 +755,139 @@ html.lenis, html.lenis body{height:auto}
 }
 .cta-btn:hover::before{left:0}
 .cta-btn:hover{color:var(--bg);border-color:var(--accent)}
+
+/* APPLICATION MODAL */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(6,6,6,.85);
+  backdrop-filter:blur(20px);
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:2rem;
+  opacity:0;
+  transition:opacity .5s ease;
+}
+.modal-overlay.active{
+  display:flex;
+  opacity:1;
+}
+.modal{
+  background:var(--bg-light);
+  border:1px solid var(--border);
+  border-radius:16px;
+  width:100%;
+  max-width:520px;
+  max-height:90vh;
+  overflow-y:auto;
+  padding:3rem;
+  position:relative;
+  transform:translateY(30px) scale(.95);
+  transition:transform .5s cubic-bezier(.23,1,.32,1);
+}
+.modal-overlay.active .modal{
+  transform:translateY(0) scale(1);
+}
+.modal-close{
+  position:absolute;
+  top:1.5rem;
+  right:1.5rem;
+  width:36px;
+  height:36px;
+  border:1px solid var(--border);
+  border-radius:50%;
+  background:transparent;
+  color:var(--text-faint);
+  font-size:1.2rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .3s ease;
+}
+.modal-close:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+.modal h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;
+  font-weight:300;
+  margin-bottom:.5rem;
+}
+.modal-sub{
+  font-size:.85rem;
+  color:var(--text-dim);
+  margin-bottom:2.5rem;
+  line-height:1.8;
+}
+.form-group{
+  margin-bottom:1.5rem;
+}
+.form-group label{
+  display:block;
+  font-size:.65rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  margin-bottom:.75rem;
+}
+.form-group input,
+.form-group textarea,
+.form-group select{
+  width:100%;
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1rem;
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-size:.9rem;
+  font-weight:300;
+  outline:none;
+  transition:border-color .4s ease;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  border-color:rgba(201,168,124,.3);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder{
+  color:var(--text-faint);
+}
+.form-group textarea{
+  min-height:120px;
+  resize:vertical;
+}
+.form-submit{
+  width:100%;
+  padding:1.2rem;
+  background:var(--accent);
+  border:none;
+  border-radius:8px;
+  color:var(--bg);
+  font-family:'Inter',sans-serif;
+  font-size:.8rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all .4s ease;
+  margin-top:1rem;
+}
+.form-submit:hover{
+  background:#b89a6e;
+  transform:translateY(-2px);
+}
+.form-note{
+  margin-top:1.5rem;
+  font-size:.75rem;
+  color:var(--text-faint);
+  line-height:1.8;
+  text-align:center;
+}
 
 /* FOOTER */
 .footer{
@@ -759,7 +905,6 @@ html.lenis, html.lenis body{height:auto}
 .footer-brand img{
   height:40px;width:auto;
   opacity:.6;
-  
 }
 .footer-brand span{
   font-family:'Cormorant Garamond',serif;
@@ -803,6 +948,43 @@ html.lenis, html.lenis body{height:auto}
   margin:0 auto;
 }
 
+/* BACK TO TOP */
+.back-to-top{
+  position:fixed;
+  bottom:24px;
+  left:24px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text-faint);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:90;
+  opacity:0;
+  visibility:hidden;
+  transition:all .5s cubic-bezier(.23,1,.32,1);
+}
+.back-to-top.visible{
+  opacity:1;
+  visibility:visible;
+}
+.back-to-top:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+  transform:translateY(-4px);
+}
+.back-to-top svg{
+  width:16px;
+  height:16px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:2;
+}
+
 /* RESPONSIVE */
 @media(max-width:1024px){
   .phil-section,.role-section{grid-template-columns:1fr;gap:4rem}
@@ -813,15 +995,15 @@ html.lenis, html.lenis body{height:auto}
   .nav-links{display:none}
   .menu-toggle{display:flex}
   .section{padding:6rem 1.5rem}
-  .hero{padding:6rem 1.5rem}
+  .hero{padding:6rem 1.5rem 8rem}
   .hero-logo{width:200px}
   .journey-grid,.cert-grid{grid-template-columns:1fr}
   .pillar-inner{grid-template-columns:1fr}
   .pillar-elements{display:none}
   .role-section{grid-template-columns:1fr}
   .footer{padding:3rem 1.5rem 1.5rem}
-  body{cursor:auto}
-  .cursor{display:none}
+  .modal{padding:2rem 1.5rem}
+  .back-to-top{bottom:90px}
 }
 </style>
 </head>
@@ -1144,7 +1326,41 @@ html.lenis, html.lenis body{height:auto}
   <img src="logo.png" alt="" class="cta-logo">
   <h2 class="reveal">The Invitation</h2>
   <p class="reveal d1">We don't promise transformation. We promise a safe and supportive space for you to confront your truth. And when that happens, transformation becomes inevitable.</p>
-  <a href="#" class="cta-btn reveal d2">Apply to Join</a>
+  <button class="cta-btn reveal d2" onclick="openModal()">Apply to Join</button>
+</div>
+
+<!-- APPLICATION MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h3>Apply to Join</h3>
+    <p class="modal-sub">The 10-week facilitator training begins with a conversation. Tell us who you are, what draws you here, and we'll be in touch within 48 hours.</p>
+    <form onsubmit="handleApply(event)">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>What draws you to Classroom Deconstruct?</label>
+        <textarea name="why" placeholder="Share a few sentences about what calls you to this work..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label>Have you facilitated or held space before?</label>
+        <select name="experience" required>
+          <option value="">Select an option</option>
+          <option value="none">No experience — I'm drawn to begin</option>
+          <option value="some">Some experience — looking to deepen</option>
+          <option value="experienced">Experienced facilitator — seeking transformation</option>
+        </select>
+      </div>
+      <button type="submit" class="form-submit">Submit Application</button>
+      <p class="form-note">This is not a commitment — it's the beginning of a conversation. We'll reach out to schedule a discovery call.</p>
+    </form>
+  </div>
 </div>
 
 <!-- FOOTER -->
@@ -1164,83 +1380,10 @@ html.lenis, html.lenis body{height:auto}
   <div class="footer-copy">Classroom Deconstruct — A space where the performance ends, and your real self begins to speak.</div>
 </footer>
 
-<script>
-// Loader
-window.addEventListener('load',()=>{
-  setTimeout(()=>document.getElementById('loader').classList.add('done'),2500);
-});
-
-// Cursor
-const cursor=document.getElementById('cursor');
-let mx=0,my=0,cx=0,cy=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
-function animCursor(){
-  cx+=(mx-cx)*.15;
-  cy+=(my-cy)*.15;
-  cursor.style.left=cx+'px';
-  cursor.style.top=cy+'px';
-  requestAnimationFrame(animCursor);
-}
-animCursor();
-document.querySelectorAll('a,button,.pillar,.phil-card,.journey-card,.cert-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
-  el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
-});
-
-// Nav visibility
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('visible',window.scrollY>100);
-});
-
-// Pillar accordion
-function togglePillar(el){
-  document.querySelectorAll('.pillar').forEach(p=>{if(p!==el)p.classList.remove('active')});
-  el.classList.toggle('active');
-}
-
-// Scroll reveal
-const obs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
-},{threshold:.1,rootMargin:'0px 0px -80px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-// Mobile menu
-const menuToggle=document.getElementById('menuToggle');
-const mobileMenu=document.getElementById('mobileMenu');
-menuToggle.addEventListener('click',()=>{
-  menuToggle.classList.toggle('active');
-  mobileMenu.classList.toggle('open');
-  document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':'';
-});
-function closeMenu(){
-  menuToggle.classList.remove('active');
-  mobileMenu.classList.remove('open');
-  document.body.style.overflow='';
-}
-
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',function(e){
-    const href=this.getAttribute('href');
-    if(href==='#') return;
-    e.preventDefault();
-    const t=document.querySelector(href);
-    if(t){
-      t.scrollIntoView({behavior:'smooth',block:'start'});
-      closeMenu();
-    }
-  });
-});
-
-// Keyboard
-document.addEventListener('keydown',(e)=>{
-  if(e.key==='Escape'){
-    closeMenu();
-  }
-});
-</script>
-
-
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
 
 <!-- AI CHATBOT -->
 <style>
@@ -1474,6 +1617,118 @@ document.addEventListener('keydown',(e)=>{
 </div>
 
 <script>
+// Loader
+window.addEventListener('load',function(){
+  setTimeout(function(){document.getElementById('loader').classList.add('done');},1200);
+});
+
+// Cursor
+var cursor=document.getElementById('cursor');
+var mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
+function animCursor(){
+  cx+=(mx-cx)*.15;
+  cy+=(my-cy)*.15;
+  cursor.style.left=cx+'px';
+  cursor.style.top=cy+'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+document.querySelectorAll('a,button,.pillar,.phil-card,.journey-card,.cert-card,.cta-btn,.chat-chip,.chat-send').forEach(function(el){
+  el.addEventListener('mouseenter',function(){cursor.classList.add('hover');});
+  el.addEventListener('mouseleave',function(){cursor.classList.remove('hover');});
+});
+
+// Nav visibility
+window.addEventListener('scroll',function(){
+  document.getElementById('nav').classList.toggle('visible',window.scrollY>100);
+});
+
+// Pillar accordion
+function togglePillar(el){
+  document.querySelectorAll('.pillar').forEach(function(p){if(p!==el)p.classList.remove('active');});
+  el.classList.toggle('active');
+}
+
+// Scroll reveal
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.1,rootMargin:'0px 0px -80px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+
+// Mobile menu
+var menuToggle=document.getElementById('menuToggle');
+var mobileMenu=document.getElementById('mobileMenu');
+menuToggle.addEventListener('click',function(){
+  menuToggle.classList.toggle('active');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':'';
+});
+function closeMenu(){
+  menuToggle.classList.remove('active');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var href=this.getAttribute('href');
+    if(href==='#') return;
+    e.preventDefault();
+    var t=document.querySelector(href);
+    if(t){
+      t.scrollIntoView({behavior:'smooth',block:'start'});
+      closeMenu();
+    }
+  });
+});
+
+// Keyboard
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    closeMenu();
+    closeModal();
+  }
+});
+
+// Back to top
+var backToTop=document.getElementById('backToTop');
+window.addEventListener('scroll',function(){
+  backToTop.classList.toggle('visible',window.scrollY>800);
+});
+
+// Modal
+function openModal(){
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e){
+  if(e && e.target!==document.getElementById('modalOverlay') && e.target.closest('.modal-close')===null) return;
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+function handleApply(e){
+  e.preventDefault();
+  var form=e.target;
+  var data=new FormData(form);
+  var body='New Application for Classroom Deconstruct\n\n';
+  body+='Name: '+data.get('name')+'\n';
+  body+='Email: '+data.get('email')+'\n';
+  body+='Experience: '+data.get('experience')+'\n\n';
+  body+='Why CD: \n'+data.get('why')+'\n';
+
+  var mailto='mailto:hello@classroomdeconstruct.com?subject=Application: '+encodeURIComponent(data.get('name'))+'&body='+encodeURIComponent(body);
+  window.location.href=mailto;
+
+  setTimeout(function(){
+    alert('Thank you, '+data.get('name')+'. Your application has been prepared. Please send the email to complete your submission. We will be in touch within 48 hours.');
+    closeModal();
+    form.reset();
+  },500);
+}
+
+// Chatbot
 var cdBody=document.getElementById('cd-chat-body');
 var cdIn=document.getElementById('cd-chat-in');
 var cdPanel=document.getElementById('cd-chat-panel');
@@ -1509,56 +1764,50 @@ function cdRemoveTyping(){
 
 function cdReply(q){
   var q2=q.toLowerCase();
-  if(q2.indexOf('what is classroom deconstruct')>-1||q2.indexOf('what is cd')>-1){
+  if(q2.indexOf('what is classroom deconstruct')>-1||q2.indexOf('what is cd')>-1||q2.indexOf('about cd')>-1){
     return "Classroom Deconstruct is a 10-week facilitator training focused on inner transformation. Through five pillars — LEAD, STAY, RISE, BURN, HOLD — you learn to hold space for others while doing your own deep work.";
   }
-  if(q2.indexOf('pillar')>-1){
+  if(q2.indexOf('pillar')>-1||q2.indexOf('five')>-1||q2.indexOf('lead')>-1||q2.indexOf('stay')>-1||q2.indexOf('rise')>-1||q2.indexOf('burn')>-1||q2.indexOf('hold')>-1){
     return "The Five Pillars are:<br><br><b>LEAD</b> — Listen, Engage, Awaken, Discern<br><b>STAY</b> — Settle, Track, Allow, Yield<br><b>RISE</b> — Root, Inspire, Serve, Embody<br><b>BURN</b> — Break, Unmask, Reveal, Nourish<br><b>HOLD</b> — Hear, Offer, Lean, Deepen<br><br>These aren't steps — they're invitations to different kinds of honesty.";
   }
-  if(q2.indexOf('lead')>-1){
-    return "LEAD is about the journey inward before leading others. You'll learn stillness, self-awareness, and how to choose from clarity rather than default patterns.";
-  }
-  if(q2.indexOf('stay')>-1){
-    return "STAY is the art of presence under pressure — remaining with discomfort and emotion instead of escaping. We settle not to escape reality, but to meet it from the ground.";
-  }
-  if(q2.indexOf('rise')>-1){
-    return "RISE is about reclaiming authenticity, vision, and purpose. Not about climbing higher, but aligning deeper — with your values, your fire, and your service.";
-  }
-  if(q2.indexOf('burn')>-1){
-    return "BURN is about dismantling what no longer serves — breaking false structures, unmasking roles, revealing what's raw, and nourishing what remains. Breakage isn't failure; it's the beginning of something real.";
-  }
-  if(q2.indexOf('hold')>-1){
-    return "HOLD is where the work becomes real — learning to truly listen, offer space without rescuing, and deepen for integrity, not intensity. To hold is to remain.";
-  }
-  if(q2.indexOf('apply')>-1||q2.indexOf('join')>-1||q2.indexOf('start')>-1){
+  if(q2.indexOf('apply')>-1||q2.indexOf('join')>-1||q2.indexOf('start')>-1||q2.indexOf('enroll')>-1||q2.indexOf('sign up')>-1){
     return "Click the 'Apply to Join' button in the invitation section. The 10-week program includes live sessions, peer practice, somatic work, and a final practicum. No prior experience required — only willingness to do your own inner work.";
   }
-  if(q2.indexOf('facilitator')>-1||q2.indexOf('role')>-1){
+  if(q2.indexOf('facilitator')>-1||q2.indexOf('role')>-1||q2.indexOf('teacher')>-1||q2.indexOf('leader')>-1){
     return "A CD Facilitator is not a teacher or authority. You are a space holder who models presence over perfection. You listen more than you speak, trust the group's wisdom, and embody what you teach.";
   }
-  if(q2.indexOf('certif')>-1){
+  if(q2.indexOf('certif')>-1||q2.indexOf('credential')>-1||q2.indexOf('graduate')>-1){
     return "Certification requires completing all modules, weekly reflections, a 60-90 minute final practicum (passing score 22+/30), peer feedback, and a final reflection. It's about embodiment, not performance.";
   }
-  if(q2.indexOf('training')>-1||q2.indexOf('week')>-1||q2.indexOf('program')>-1){
+  if(q2.indexOf('training')>-1||q2.indexOf('week')>-1||q2.indexOf('program')>-1||q2.indexOf('course')>-1||q2.indexOf('duration')>-1){
     return "The 10-week training has three phases:<br><br><b>Weeks 1-2:</b> Foundation — philosophy, safety, trauma sensitivity.<br><b>Weeks 3-7:</b> Pillar Embodiment — deep work through all five pillars.<br><b>Weeks 8-10:</b> Mastery & Integration — practicum, assessment, certification.";
   }
-  if(q2.indexOf('cost')>-1||q2.indexOf('price')>-1||q2.indexOf('pay')>-1||q2.indexOf('fee')>-1||q2.indexOf('money')>-1){
+  if(q2.indexOf('cost')>-1||q2.indexOf('price')>-1||q2.indexOf('pay')>-1||q2.indexOf('fee')>-1||q2.indexOf('money')>-1||q2.indexOf('how much')>-1){
     return "Pricing is shared during the application review. We offer payment plans to make this work accessible. Apply and we'll discuss everything on a discovery call.";
   }
-  if(q2.indexOf('unlearn')>-1){
+  if(q2.indexOf('unlearn')>-1||q2.indexOf('let go')>-1){
     return "Unlearning is letting go of what was never truly yours — inherited beliefs, performed roles, survival patterns that once protected you but now constrain you.";
   }
-  if(q2.indexOf('unmask')>-1){
+  if(q2.indexOf('unmask')>-1||q2.indexOf('mask')>-1||q2.indexOf('authentic')>-1){
     return "Unmasking is removing the false roles you've worn to survive. The mask didn't protect you — it protected your image. Beneath it, you are still here.";
   }
-  if(q2.indexOf('transform')>-1){
+  if(q2.indexOf('transform')>-1||q2.indexOf('change')>-1||q2.indexOf('become')>-1){
     return "Transformation in CD isn't about becoming someone else. It's about returning to who you've always been — stripping away false layers to reveal the authentic individual within.";
   }
-  if(q2.indexOf('hello')>-1||q2.indexOf('hi')>-1){
+  if(q2.indexOf('hello')>-1||q2.indexOf('hi')>-1||q2.indexOf('hey')>-1){
     return "Hello. I'm here to guide you through Classroom Deconstruct. What would you like to explore?";
   }
-  if(q2.indexOf('help')>-1){
+  if(q2.indexOf('help')>-1||q2.indexOf('what can you')>-1){
     return "I can answer questions about:<br>• What CD is<br>• The Five Pillars<br>• The training structure<br>• How to apply<br>• The facilitator role<br>• Certification<br><br>What would you like to know?";
+  }
+  if(q2.indexOf('contact')>-1||q2.indexOf('email')>-1||q2.indexOf('reach')>-1||q2.indexOf('talk')>-1){
+    return "You can apply directly through the 'Apply to Join' button, or reach out via the contact form. We'll respond within 48 hours.";
+  }
+  if(q2.indexOf('who')>-1||q2.indexOf('founder')>-1||q2.indexOf('created')>-1||q2.indexOf('behind')>-1){
+    return "Classroom Deconstruct was created by facilitators who believe that real transformation happens from the inside out. The program is led by experienced space-holders committed to depth, integrity, and authenticity.";
+  }
+  if(q2.indexOf('online')>-1||q2.indexOf('in person')>-1||q2.indexOf('virtual')>-1||q2.indexOf('location')>-1||q2.indexOf('where')>-1){
+    return "The training is delivered through a blend of live online sessions and peer practice. You can participate from anywhere in the world. All you need is presence, a quiet space, and a willingness to go deep.";
   }
   return "I don't have a specific answer for that yet. Could you rephrase, or ask about the pillars, training, application process, or facilitator role?";
 }
@@ -1583,7 +1832,7 @@ function cdChip(text){
     cdAdd(cdReply(text),false);
   },1000);
 }
-</script></script>
+</script>
 
 </body>
 </html>
