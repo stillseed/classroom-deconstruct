@@ -1,1837 +1,913 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classroom Deconstruct — Unlearn. Unmask. Transform.</title>
-    <meta name="description" content="A disruption in the traditional learning landscape. A space to unlearn, unmask, and transform from the inside out.">
-    <link rel="icon" type="image/png" href="assets/logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
-    <style>
-        /* ============================================
-           DESIGN TOKENS
-           ============================================ */
-        :root {
-            --bg: #050505;
-            --bg-elevated: #0a0a0a;
-            --bg-card: #0f0f0f;
-            --text: #f0ede8;
-            --text-secondary: #a39e97;
-            --text-muted: #6b6560;
-            --gold: #c9a87c;
-            --gold-bright: #ddb88e;
-            --gold-dim: #7a6b52;
-            --border: #1a1a1a;
-            --border-hover: #2a2a2a;
-            --lead: #9a7e5a;
-            --stay: #5a6e7e;
-            --rise: #6a7a5a;
-            --burn: #8a4a3a;
-            --hold: #6a5a7a;
-            --cursor-size: 8px;
-            --cursor-ring: 40px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classroom Deconstruct</title>
+<link rel="icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf8f5;
+  --bg-warm:#f5f0ea;
+  --bg-dark:#1a1816;
+  --text:#1a1816;
+  --text-light:#6b6560;
+  --text-muted:#a39e97;
+  --accent:#c17f59;
+  --accent-deep:#8b5a3a;
+  --border:#e8e2da;
+  --border-dark:#d4cdc4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  font-weight:300;
+  overflow-x:hidden;
+}
+::selection{background:rgba(193,127,89,0.2)}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-dark);border-radius:3px}
 
-        /* ============================================
-           RESET & BASE
-           ============================================ */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* PRELOADER */
+#preloader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg-dark);color:var(--bg);
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  transition:transform 1.2s cubic-bezier(.77,0,.175,1),opacity .8s ease;
+}
+#preloader.done{transform:translateY(-100%);opacity:0}
+.preloader-logo{width:180px;margin-bottom:3rem;opacity:0;animation:pl .8s ease .3s forwards}
+.preloader-line{width:0;height:1px;background:var(--accent);animation:pline 1.2s ease .8s forwards}
+.preloader-text{margin-top:2rem;font-size:.7rem;letter-spacing:6px;text-transform:uppercase;opacity:0;animation:pl .6s ease 1.5s forwards}
+@keyframes pl{to{opacity:1}}
+@keyframes pline{to{width:120px}}
 
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:2rem 4rem;display:flex;justify-content:space-between;align-items:center;
+  mix-blend-mode:difference;
+}
+nav img{height:44px;width:auto}
+.nav-links{display:flex;gap:3rem;list-style:none}
+.nav-links a{
+  color:#fff;text-decoration:none;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;
+  position:relative;padding-bottom:4px;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--accent);transition:width .4s ease;
+}
+.nav-links a:hover::after{width:100%}
+.menu-btn{display:none;background:none;border:none;color:#fff;font-size:1.5rem}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            font-weight: 300;
-            overflow-x: hidden;
-            cursor: none;
-        }
+/* MOBILE NAV */
+.mob-nav{
+  display:none;position:fixed;inset:0;z-index:99;
+  background:var(--bg-dark);flex-direction:column;
+  justify-content:center;align-items:center;gap:2.5rem;
+}
+.mob-nav.active{display:flex}
+.mob-nav a{color:#fff;text-decoration:none;font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:400}
+.mob-close{position:absolute;top:2rem;right:2rem;background:none;border:none;color:#fff;font-size:2.5rem}
 
-        ::selection {
-            background: rgba(201, 168, 124, 0.25);
-            color: var(--text);
-        }
+/* HERO */
+.hero{
+  min-height:100vh;display:grid;grid-template-columns:1fr 1fr;
+  position:relative;overflow:hidden;
+}
+.hero-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:8rem 5rem 5rem;position:relative;z-index:2;
+}
+.hero-label{
+  font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--text-muted);margin-bottom:2rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.hero-label::before{
+  content:'';width:40px;height:1px;background:var(--accent);
+}
+.hero-title{
+  font-family:'Playfair Display',serif;font-size:clamp(3.5rem,6vw,7rem);
+  font-weight:400;line-height:1.05;letter-spacing:-2px;margin-bottom:2rem;
+}
+.hero-title em{
+  font-style:italic;color:var(--accent);display:block;
+}
+.hero-desc{
+  font-size:1.1rem;color:var(--text-light);line-height:1.9;max-width:480px;margin-bottom:3rem;
+}
+.hero-cta{display:flex;gap:1.5rem;align-items:center}
+.btn-primary{
+  background:var(--text);color:var(--bg);padding:1.2rem 2.5rem;
+  font-size:.75rem;letter-spacing:3px;text-transform:uppercase;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:all .4s ease;position:relative;overflow:hidden;
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;background:var(--accent);transform:translateX(-100%);transition:transform .4s ease;z-index:-1;
+}
+.btn-primary:hover::before{transform:translateX(0)}
+.btn-primary:hover{color:#fff}
+.btn-text{
+  color:var(--text);text-decoration:none;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;
+  display:flex;align-items:center;gap:.75rem;position:relative;
+}
+.btn-text::after{
+  content:'';width:0;height:1px;background:var(--accent);position:absolute;bottom:-4px;left:0;transition:width .4s ease;
+}
+.btn-text:hover::after{width:100%}
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 2px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+.hero-right{
+  position:relative;background:var(--bg-dark);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.hero-right::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 50%,rgba(193,127,89,.15) 0%,transparent 60%);
+}
+.hero-logo-wrap{
+  position:relative;z-index:2;text-align:center;
+}
+.hero-logo-wrap img{
+  width:320px;height:auto;opacity:.9;
+  filter:invert(1) brightness(2);
+  animation:float 8s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-20px)}
+}
+.hero-right-text{
+  position:absolute;bottom:3rem;left:3rem;right:3rem;
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:1.3rem;color:rgba(255,255,255,.3);line-height:1.6;
+}
 
-        /* ============================================
-           FILM GRAIN OVERLAY
-           ============================================ */
-        .grain {
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            right: -50%;
-            bottom: -50%;
-            width: 200%;
-            height: 200%;
-            background: transparent url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E") repeat;
-            opacity: 0.025;
-            pointer-events: none;
-            z-index: 9998;
-            animation: grain 0.5s steps(10) infinite;
-        }
-        @keyframes grain {
-            0%, 100% { transform: translate(0, 0); }
-            10% { transform: translate(-2%, -2%); }
-            20% { transform: translate(2%, 2%); }
-            30% { transform: translate(-1%, 1%); }
-            40% { transform: translate(1%, -1%); }
-            50% { transform: translate(-2%, 2%); }
-            60% { transform: translate(2%, -2%); }
-            70% { transform: translate(-1%, -1%); }
-            80% { transform: translate(1%, 1%); }
-            90% { transform: translate(-2%, -1%); }
-        }
+/* MARQUEE */
+.marquee{
+  background:var(--bg-dark);color:var(--bg);padding:1.5rem 0;overflow:hidden;white-space:nowrap;
+}
+.marquee-inner{
+  display:inline-block;animation:marquee 20s linear infinite;
+}
+.marquee span{
+  font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;
+  margin:0 3rem;opacity:.6;
+}
+@keyframes marquee{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
 
-        /* ============================================
-           CUSTOM CURSOR
-           ============================================ */
-        .cursor-dot {
-            position: fixed;
-            width: var(--cursor-size);
-            height: var(--cursor-size);
-            background: var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background 0.2s;
-            mix-blend-mode: difference;
-        }
-        .cursor-ring {
-            position: fixed;
-            width: var(--cursor-ring);
-            height: var(--cursor-ring);
-            border: 1px solid rgba(201, 168, 124, 0.3);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
-        }
-        body.hovering .cursor-ring {
-            width: 60px;
-            height: 60px;
-            border-color: var(--gold);
-            background: rgba(201, 168, 124, 0.05);
-        }
-        body.hovering .cursor-dot {
-            width: 4px;
-            height: 4px;
-            background: var(--gold-bright);
-        }
-        @media (pointer: coarse) {
-            .cursor-dot, .cursor-ring { display: none; }
-            body { cursor: auto; }
-        }
+/* SECTIONS */
+.section{padding:10rem 4rem;max-width:1400px;margin:0 auto;position:relative}
+.section-alt{background:var(--bg-warm)}
+.section-header{margin-bottom:6rem;display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:end}
+.section-label{
+  font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--text-muted);
+  display:flex;align-items:center;gap:1rem;
+}
+.section-label::before{content:'';width:30px;height:1px;background:var(--accent)}
+.section-title{
+  font-family:'Playfair Display',serif;font-size:clamp(2.5rem,4vw,4.5rem);
+  font-weight:400;line-height:1.1;letter-spacing:-1px;
+}
+.section-subtitle{
+  font-size:1.1rem;color:var(--text-light);line-height:1.9;margin-top:1.5rem;
+}
 
-        /* ============================================
-           PRELOADER
-           ============================================ */
-        .preloader {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            z-index: 9997;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1), visibility 1.2s;
-        }
-        .preloader.done {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        .preloader-logo {
-            width: 180px;
-            height: auto;
-            opacity: 0;
-            animation: preloaderIn 1s ease forwards;
-        }
-        .preloader-line {
-            width: 0;
-            height: 1px;
-            background: var(--gold);
-            margin-top: 3rem;
-            animation: lineGrow 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0.5s forwards;
-        }
-        .preloader-text {
-            margin-top: 1.5rem;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.85rem;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            opacity: 0;
-            animation: fadeUp 1s ease 1s forwards;
-        }
-        @keyframes preloaderIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes lineGrow {
-            from { width: 0; }
-            to { width: 120px; }
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+/* PHILOSOPHY */
+.phil-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.phil-card{
+  padding:4rem 3rem;border:1px solid var(--border);margin:-1px 0 0 -1px;
+  transition:all .5s ease;position:relative;overflow:hidden;
+}
+.phil-card:hover{
+  background:var(--bg-dark);color:var(--bg);border-color:var(--bg-dark);
+  transform:translateY(-4px);box-shadow:0 30px 60px rgba(0,0,0,.15);
+}
+.phil-card:hover .phil-num{color:rgba(255,255,255,.1)}
+.phil-card:hover .phil-title{color:var(--accent)}
+.phil-card:hover .phil-desc{color:rgba(255,255,255,.7)}
+.phil-num{
+  font-family:'Playfair Display',serif;font-size:5rem;font-weight:400;
+  color:var(--border-dark);line-height:1;margin-bottom:2rem;transition:color .5s ease;
+}
+.phil-title{
+  font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:1.5rem;transition:color .5s ease;
+}
+.phil-desc{font-size:.95rem;color:var(--text-light);line-height:1.9;transition:color .5s ease}
 
-        /* ============================================
-           NAVIGATION
-           ============================================ */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 2rem 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        .nav.scrolled {
-            padding: 1.2rem 4rem;
-            background: rgba(5, 5, 5, 0.9);
-            backdrop-filter: blur(20px) saturate(1.2);
-            border-bottom: 1px solid var(--border);
-        }
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-            opacity: 0;
-            transform: translateY(-10px);
-            animation: navIn 0.8s ease 2.2s forwards;
-        }
-        .nav-brand img {
-            height: 48px;
-            width: auto;
-            opacity: 0.9;
-            transition: opacity 0.3s ease;
-        }
-        .nav-brand:hover img { opacity: 1; }
-        .nav-brand span {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
-            color: var(--text);
-            letter-spacing: 1px;
-            font-weight: 400;
-        }
-        .nav-brand span em {
-            color: var(--gold);
-            font-style: normal;
-        }
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            list-style: none;
-        }
-        .nav-links li {
-            opacity: 0;
-            transform: translateY(-10px);
-            animation: navIn 0.8s ease forwards;
-        }
-        .nav-links li:nth-child(1) { animation-delay: 2.3s; }
-        .nav-links li:nth-child(2) { animation-delay: 2.4s; }
-        .nav-links li:nth-child(3) { animation-delay: 2.5s; }
-        .nav-links li:nth-child(4) { animation-delay: 2.6s; }
-        .nav-links li:nth-child(5) { animation-delay: 2.7s; }
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: color 0.4s ease;
-            position: relative;
-            padding-bottom: 4px;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--gold);
-            transition: width 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        .nav-links a:hover { color: var(--gold); }
-        .nav-links a:hover::after { width: 100%; }
-        @keyframes navIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: none;
-        }
+/* PILLARS */
+.pillar{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+  gap:3rem;padding:3rem 0;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:all .4s ease;
+}
+.pillar:first-child{border-top:1px solid var(--border)}
+.pillar:hover{padding-left:1.5rem}
+.pillar-num{
+  font-family:'Playfair Display',serif;font-size:3rem;font-weight:400;
+  color:var(--border-dark);width:80px;transition:color .4s ease;
+}
+.pillar:hover .pillar-num{color:var(--accent)}
+.pillar-info{}
+.pillar-name{
+  font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:400;
+  letter-spacing:2px;margin-bottom:.5rem;transition:color .4s ease;
+}
+.pillar:hover .pillar-name{color:var(--accent-deep)}
+.pillar-elements{
+  font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);
+}
+.pillar-arrow{
+  width:50px;height:50px;border:1px solid var(--border);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;transition:all .4s ease;
+}
+.pillar:hover .pillar-arrow{
+  background:var(--accent);border-color:var(--accent);color:#fff;
+  transform:rotate(45deg);
+}
+.pillar-body{
+  max-height:0;overflow:hidden;transition:max-height .8s cubic-bezier(.77,0,.175,1);
+}
+.pillar.active .pillar-body{max-height:600px}
+.pillar.active .pillar-arrow{transform:rotate(45deg);background:var(--accent);border-color:var(--accent);color:#fff}
+.pillar-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+  padding:0 0 4rem 80px;
+}
+.pillar-quote{
+  font-family:'Playfair Display',serif;font-style:italic;font-size:1.3rem;
+  color:var(--accent-deep);line-height:1.7;padding-left:1.5rem;
+  border-left:2px solid var(--accent);margin-top:2rem;
+}
+.pillar-practices h4{
+  font-size:.7rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:1.5rem;
+}
+.pillar-practices ul{list-style:none}
+.pillar-practices li{
+  padding:.75rem 0;border-bottom:1px solid var(--border);
+  font-size:.9rem;color:var(--text-light);display:flex;align-items:center;gap:1rem;
+}
+.pillar-practices li::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;
+}
 
-        /* ============================================
-           MOBILE NAV
-           ============================================ */
-        .mobile-nav {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            z-index: 99;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 2.5rem;
-            padding: 2rem;
-        }
-        .mobile-nav.active { display: flex; }
-        .mobile-nav a {
-            color: var(--text);
-            text-decoration: none;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s ease;
-        }
-        .mobile-nav.active a {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .mobile-nav-close {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 3rem;
-            cursor: none;
-        }
+/* JOURNEY */
+.journey-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.journey-card{
+  padding:3rem;background:var(--bg);border:1px solid var(--border);
+  transition:all .5s ease;position:relative;overflow:hidden;
+}
+.journey-card::before{
+  content:'';position:absolute;top:0;left:0;width:100%;height:3px;
+  background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .5s ease;
+}
+.journey-card:hover::before{transform:scaleX(1)}
+.journey-card:hover{
+  transform:translateY(-8px);box-shadow:0 25px 50px rgba(0,0,0,.08);
+}
+.journey-week{
+  font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;
+}
+.journey-title{
+  font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:1.5rem;
+}
+.journey-desc{font-size:.95rem;color:var(--text-light);line-height:1.9;margin-bottom:2rem}
+.journey-list{list-style:none}
+.journey-list li{
+  padding:.5rem 0;font-size:.85rem;color:var(--text-muted);
+  display:flex;align-items:center;gap:.75rem;
+}
+.journey-list li::before{content:'→';color:var(--accent);font-size:.8rem}
 
-        /* ============================================
-           HERO
-           ============================================ */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 10rem 2rem 6rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-bg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 900px;
-            height: 900px;
-            background: radial-gradient(circle, rgba(201, 168, 124, 0.06) 0%, transparent 60%);
-            pointer-events: none;
-            animation: heroPulse 8s ease-in-out infinite;
-        }
-        @keyframes heroPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-        }
-        .hero-logo {
-            width: 280px;
-            height: auto;
-            margin-bottom: 3rem;
-            opacity: 0;
-            transform: scale(0.8);
-            animation: heroLogoIn 1.2s cubic-bezier(0.77, 0, 0.175, 1) 2s forwards;
-        }
-        @keyframes heroLogoIn {
-            to { opacity: 1; transform: scale(1); }
-        }
-        .hero h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(4rem, 10vw, 8rem);
-            font-weight: 300;
-            line-height: 1.05;
-            margin-bottom: 2rem;
-            letter-spacing: -2px;
-        }
-        .hero h1 em {
-            font-style: italic;
-            color: var(--gold);
-            display: block;
-        }
-        .hero-tagline {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 3rem;
-            opacity: 0;
-            animation: fadeUp 1s ease 2.6s forwards;
-        }
-        .hero-desc {
-            max-width: 600px;
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            line-height: 1.9;
-            margin-bottom: 4rem;
-            opacity: 0;
-            animation: fadeUp 1s ease 2.8s forwards;
-        }
-        .hero-cta {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            opacity: 0;
-            animation: fadeUp 1s ease 3s forwards;
-        }
+/* ROLE */
+.role-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:8rem;align-items:center}
+.role-quote{
+  font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:400;
+  line-height:1.2;font-style:italic;position:relative;padding-left:2rem;
+}
+.role-quote::before{
+  content:'';position:absolute;left:0;top:.5rem;bottom:.5rem;width:3px;background:var(--accent);
+}
+.role-quote span{color:var(--accent)}
+.role-list{list-style:none}
+.role-list li{
+  padding:1.5rem 0;border-bottom:1px solid var(--border);
+  font-size:1.1rem;color:var(--text-light);display:flex;align-items:center;gap:1.5rem;
+}
+.role-list li::before{
+  content:'';width:8px;height:8px;border-radius:50%;background:var(--border-dark);flex-shrink:0;transition:background .4s ease;
+}
+.role-list li:hover::before{background:var(--accent)}
 
-        /* ============================================
-           BUTTONS
-           ============================================ */
-        .btn {
-            position: relative;
-            padding: 1.1rem 2.8rem;
-            font-size: 0.75rem;
-            font-weight: 400;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            text-decoration: none;
-            border: 1px solid var(--border-hover);
-            color: var(--text);
-            background: transparent;
-            cursor: none;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-            display: inline-block;
-        }
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--gold);
-            transition: left 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-            z-index: -1;
-        }
-        .btn:hover::before { left: 0; }
-        .btn:hover {
-            color: var(--bg);
-            border-color: var(--gold);
-            letter-spacing: 4px;
-        }
-        .btn-outline {
-            border-color: var(--border);
-            color: var(--text-muted);
-        }
-        .btn-outline::before { background: var(--bg-card); }
-        .btn-outline:hover { color: var(--text); border-color: var(--border-hover); }
+/* FLOW */
+.flow-grid{display:flex;justify-content:space-between;gap:2rem;margin-top:4rem}
+.flow-item{text-align:center;flex:1;position:relative;padding:2rem}
+.flow-item:not(:last-child)::after{
+  content:'';position:absolute;right:-1rem;top:50%;width:2rem;height:1px;background:var(--border-dark);
+}
+.flow-num{
+  font-family:'Playfair Display',serif;font-size:4rem;font-weight:400;
+  color:var(--border-dark);line-height:1;margin-bottom:1rem;transition:color .4s ease;
+}
+.flow-item:hover .flow-num{color:var(--accent)}
+.flow-title{
+  font-size:.8rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:.75rem;
+}
+.flow-desc{font-size:.9rem;color:var(--text-light)}
 
-        /* ============================================
-           SCROLL INDICATOR
-           ============================================ */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
-            opacity: 0;
-            animation: fadeUp 1s ease 3.2s forwards;
-        }
-        .scroll-indicator span {
-            font-size: 0.6rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-        }
-        .scroll-line {
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--gold), transparent);
-            animation: scrollLine 2s ease-in-out infinite;
-        }
-        @keyframes scrollLine {
-            0%, 100% { transform: scaleY(1); opacity: 1; }
-            50% { transform: scaleY(0.5); opacity: 0.3; }
-        }
+/* CERT */
+.cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.cert-card{
+  padding:3rem;border:1px solid var(--border);margin:-1px 0 0 -1px;
+  transition:all .5s ease;position:relative;
+}
+.cert-card:hover{background:var(--bg-dark);color:var(--bg);border-color:var(--bg-dark);transform:translateY(-4px)}
+.cert-card:hover .cert-num{color:rgba(255,255,255,.08)}
+.cert-card:hover .cert-title{color:var(--accent)}
+.cert-card:hover .cert-desc{color:rgba(255,255,255,.6)}
+.cert-num{
+  font-family:'Playfair Display',serif;font-size:4rem;font-weight:400;
+  color:var(--border-dark);line-height:1;margin-bottom:1.5rem;transition:color .5s ease;
+}
+.cert-title{font-size:1.1rem;margin-bottom:1rem;transition:color .5s ease}
+.cert-desc{font-size:.9rem;color:var(--text-light);line-height:1.8;transition:color .5s ease}
 
-        /* ============================================
-           SECTIONS
-           ============================================ */
-        .section {
-            padding: 8rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-        }
-        .section-header {
-            margin-bottom: 5rem;
-        }
-        .section-label {
-            display: block;
-            font-size: 0.7rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--gold-dim);
-            margin-bottom: 1.5rem;
-            font-weight: 400;
-        }
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 300;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-        }
-        .section-subtitle {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            line-height: 1.8;
-            font-weight: 300;
-        }
+/* TESTIMONIALS */
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.test-card{
+  padding:3rem;background:var(--bg);border:1px solid var(--border);
+  transition:all .5s ease;
+}
+.test-card:hover{border-color:var(--border-dark);transform:translateY(-4px)}
+.test-quote{
+  font-family:'Playfair Display',serif;font-style:italic;font-size:1.3rem;
+  line-height:1.7;color:var(--text-light);margin-bottom:2rem;
+}
+.test-author{
+  font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);
+}
 
-        /* ============================================
-           REVEAL ANIMATIONS
-           ============================================ */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1s cubic-bezier(0.77, 0, 0.175, 1), 
-                        transform 1s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
+/* CTA */
+.cta{
+  background:var(--bg-dark);color:var(--bg);padding:10rem 4rem;text-align:center;position:relative;overflow:hidden;
+}
+.cta::before{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:600px;background:radial-gradient(circle,rgba(193,127,89,.1) 0%,transparent 60%);
+  animation:ctaPulse 6s ease-in-out infinite;
+}
+@keyframes ctaPulse{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.2)}
+}
+.cta-title{
+  font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);
+  font-weight:400;margin-bottom:1.5rem;position:relative;
+}
+.cta-desc{
+  font-size:1.1rem;color:rgba(255,255,255,.5);max-width:500px;margin:0 auto 3rem;
+  line-height:1.9;position:relative;
+}
+.cta-btn{
+  display:inline-block;background:var(--accent);color:#fff;
+  padding:1.2rem 3rem;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;
+  text-decoration:none;transition:all .4s ease;position:relative;
+}
+.cta-btn:hover{background:#fff;color:var(--bg-dark)}
 
-        /* ============================================
-           PHILOSOPHY CARDS
-           ============================================ */
-        .philosophy-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        .philosophy-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 3rem 2.5rem;
-            transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .philosophy-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: var(--gold);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        .philosophy-card:hover::before { transform: scaleX(1); }
-        .philosophy-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        }
-        .philosophy-card h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
-            font-weight: 400;
-            color: var(--gold);
-            margin-bottom: 1.5rem;
-            letter-spacing: 1px;
-        }
-        .philosophy-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.9;
-        }
-        .philosophy-card .card-num {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 4rem;
-            font-weight: 300;
-            color: var(--gold);
-            opacity: 0.06;
-            line-height: 1;
-        }
+/* FOOTER */
+footer{
+  padding:6rem 4rem 3rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:4rem;
+  max-width:1400px;margin:0 auto;
+}
+.footer-brand img{height:48px;margin-bottom:1.5rem;opacity:.8}
+.footer-brand p{font-size:.9rem;color:var(--text-light);line-height:1.8}
+.footer-title{
+  font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.5rem;
+}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:.75rem}
+.footer-links a{color:var(--text-light);text-decoration:none;font-size:.9rem;transition:color .3s ease}
+.footer-links a:hover{color:var(--accent)}
+.footer-copy{
+  grid-column:1/-1;text-align:center;padding-top:3rem;margin-top:3rem;
+  border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted);
+}
 
-        /* ============================================
-           PILLARS
-           ============================================ */
-        .pillars-section {
-            background: var(--bg-elevated);
-            padding: 8rem 2rem;
-            position: relative;
-        }
-        .pillars-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--border), transparent);
-        }
-        .pillars-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .pillar {
-            border-bottom: 1px solid var(--border);
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-        .pillar:first-child { border-top: 1px solid var(--border); }
-        .pillar-header {
-            display: flex;
-            align-items: center;
-            padding: 2.5rem 0;
-            cursor: none;
-            gap: 2rem;
-            transition: all 0.4s ease;
-        }
-        .pillar-header:hover { padding-left: 1rem; }
-        .pillar-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: white;
-            flex-shrink: 0;
-            transition: transform 0.4s ease;
-        }
-        .pillar:hover .pillar-icon { transform: scale(1.1); }
-        .pillar-icon.lead { background: var(--lead); }
-        .pillar-icon.stay { background: var(--stay); }
-        .pillar-icon.rise { background: var(--rise); }
-        .pillar-icon.burn { background: var(--burn); }
-        .pillar-icon.hold { background: var(--hold); }
-        .pillar-title-group { flex: 1; }
-        .pillar-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            transition: color 0.4s ease;
-        }
-        .pillar:hover .pillar-name { color: var(--gold); }
-        .pillar-elements {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            margin-top: 0.5rem;
-            text-transform: uppercase;
-        }
-        .pillar-toggle {
-            font-size: 2rem;
-            color: var(--text-muted);
-            transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-            width: 40px;
-            text-align: center;
-        }
-        .pillar.active .pillar-toggle { transform: rotate(45deg); color: var(--gold); }
-        .pillar-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        .pillar.active .pillar-body { max-height: 800px; }
-        .pillar-inner {
-            padding: 0 0 3rem 5rem;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 4rem;
-        }
-        .pillar-desc {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 2;
-        }
-        .pillar-desc strong {
-            color: var(--text);
-            font-weight: 400;
-            font-size: 1.1rem;
-        }
-        .pillar-quote {
-            margin-top: 2rem;
-            padding-left: 1.5rem;
-            border-left: 2px solid var(--gold);
-            font-style: italic;
-            color: var(--gold);
-            font-size: 1rem;
-            line-height: 1.8;
-            font-family: 'Cormorant Garamond', serif;
-        }
-        .pillar-practices {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            padding: 2rem;
-        }
-        .pillar-practices h4 {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gold-dim);
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-        .pillar-practices ul { list-style: none; }
-        .pillar-practices li {
-            padding: 0.75rem 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-bottom: 1px solid var(--border);
-            transition: color 0.3s ease;
-        }
-        .pillar-practices li:hover { color: var(--text-secondary); }
-        .pillar-practices li:last-child { border-bottom: none; }
-        .pillar-practices li::before {
-            content: '';
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--gold-dim);
-            margin-right: 1rem;
-            vertical-align: middle;
-            transition: background 0.3s ease;
-        }
-        .pillar-practices li:hover::before { background: var(--gold); }
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(60px);transition:all 1s cubic-bezier(.77,0,.175,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}
+.d2{transition-delay:.2s}
+.d3{transition-delay:.3s}
 
-        /* ============================================
-           JOURNEY TIMELINE
-           ============================================ */
-        .timeline-section { padding: 8rem 2rem; }
-        .timeline {
-            margin-top: 4rem;
-            position: relative;
-        }
-        .timeline-line {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: linear-gradient(to bottom, var(--gold), var(--border), var(--gold));
-            transform: translateX(-50%);
-        }
-        .phase {
-            display: flex;
-            margin-bottom: 4rem;
-            position: relative;
-        }
-        .phase:nth-child(even) { flex-direction: row-reverse; }
-        .phase-content {
-            width: 42%;
-            padding: 2.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-            position: relative;
-        }
-        .phase-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            background: var(--gold);
-            transform: scaleY(0);
-            transform-origin: top;
-            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        .phase-content:hover::before { transform: scaleY(1); }
-        .phase-content:hover {
-            border-color: var(--border-hover);
-            transform: scale(1.02);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
-        }
-        .phase-dot {
-            position: absolute;
-            left: 50%;
-            top: 2.5rem;
-            transform: translateX(-50%);
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--bg);
-            border: 2px solid var(--gold);
-            z-index: 2;
-            transition: all 0.4s ease;
-        }
-        .phase-content:hover + .phase-dot,
-        .phase:hover .phase-dot {
-            background: var(--gold);
-            box-shadow: 0 0 20px rgba(201, 168, 124, 0.4);
-        }
-        .phase-weeks {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gold-dim);
-            margin-bottom: 0.75rem;
-        }
-        .phase-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 1rem;
-        }
-        .phase-desc {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.9;
-        }
-        .phase-modules {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-        }
-        .phase-modules li {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            padding: 0.4rem 0;
-            list-style: none;
-            transition: color 0.3s ease;
-        }
-        .phase-modules li:hover { color: var(--text-secondary); }
-        .phase-modules li::before {
-            content: '→';
-            color: var(--gold-dim);
-            margin-right: 0.75rem;
-            transition: color 0.3s ease;
-        }
-        .phase-modules li:hover::before { color: var(--gold); }
-
-        /* ============================================
-           FACILITATOR ROLE
-           ============================================ */
-        .role-section {
-            background: var(--bg-elevated);
-            padding: 8rem 2rem;
-            position: relative;
-        }
-        .role-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--border), transparent);
-        }
-        .role-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 6rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            align-items: center;
-        }
-        .role-quote {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3rem;
-            font-weight: 300;
-            line-height: 1.3;
-            font-style: italic;
-            position: relative;
-            padding-left: 2rem;
-        }
-        .role-quote::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.5rem;
-            bottom: 0.5rem;
-            width: 2px;
-            background: var(--gold);
-            opacity: 0.5;
-        }
-        .role-quote span { color: var(--gold); }
-        .role-details h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            font-weight: 400;
-            color: var(--gold);
-            margin-bottom: 2.5rem;
-            letter-spacing: 2px;
-        }
-        .role-list { list-style: none; }
-        .role-list li {
-            padding: 1.2rem 0;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            transition: all 0.4s ease;
-        }
-        .role-list li:hover {
-            color: var(--text);
-            padding-left: 0.5rem;
-        }
-        .role-list li::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--gold-dim);
-            flex-shrink: 0;
-            transition: all 0.4s ease;
-        }
-        .role-list li:hover::before {
-            background: var(--gold);
-            box-shadow: 0 0 10px rgba(201, 168, 124, 0.4);
-        }
-
-        /* ============================================
-           SESSION FLOW
-           ============================================ */
-        .flow-section {
-            background: var(--bg-elevated);
-            padding: 8rem 2rem;
-            position: relative;
-        }
-        .flow-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--border), transparent);
-        }
-        .flow-grid {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 4rem;
-            flex-wrap: wrap;
-        }
-        .flow-item {
-            text-align: center;
-            max-width: 220px;
-            position: relative;
-            padding: 2rem;
-        }
-        .flow-item:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            right: -1.5rem;
-            top: 50%;
-            width: 3rem;
-            height: 1px;
-            background: linear-gradient(to right, var(--border-hover), transparent);
-        }
-        .flow-icon {
-            width: 70px;
-            height: 70px;
-            border: 1px solid var(--border-hover);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 1.5rem;
-            color: var(--gold);
-            transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-            position: relative;
-        }
-        .flow-icon::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 50%;
-            border: 1px solid transparent;
-            transition: all 0.6s ease;
-        }
-        .flow-item:hover .flow-icon {
-            background: var(--gold);
-            color: var(--bg);
-            border-color: var(--gold);
-            transform: scale(1.1);
-        }
-        .flow-item:hover .flow-icon::before {
-            border-color: var(--gold);
-            transform: scale(1.2);
-            opacity: 0;
-        }
-        .flow-title {
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 0.75rem;
-            color: var(--text);
-        }
-        .flow-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-
-        /* ============================================
-           CERTIFICATION
-           ============================================ */
-        .cert-section { padding: 8rem 2rem; }
-        .cert-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-        .cert-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 2.5rem;
-            text-align: left;
-            transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .cert-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: var(--gold);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        .cert-card:hover::before { transform: scaleX(1); }
-        .cert-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-6px);
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
-        }
-        .cert-num {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3.5rem;
-            font-weight: 300;
-            color: var(--gold);
-            opacity: 0.08;
-            line-height: 1;
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-        }
-        .cert-title {
-            font-size: 1.1rem;
-            font-weight: 400;
-            margin: 0 0 0.75rem;
-            color: var(--text);
-            letter-spacing: 0.5px;
-        }
-        .cert-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-        }
-
-        /* ============================================
-           TESTIMONIALS
-           ============================================ */
-        .testimonials-section {
-            background: var(--bg-elevated);
-            padding: 8rem 2rem;
-            position: relative;
-        }
-        .testimonials-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--border), transparent);
-        }
-        .testimonials {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        .testimonial {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 3rem;
-            position: relative;
-            transition: all 0.5s ease;
-        }
-        .testimonial:hover {
-            border-color: var(--border-hover);
-        }
-        .testimonial::before {
-            content: '"';
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 8rem;
-            color: var(--gold);
-            opacity: 0.06;
-            position: absolute;
-            top: 0.5rem;
-            left: 1.5rem;
-            line-height: 1;
-        }
-        .testimonial-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            font-style: italic;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-        .testimonial-author {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* ============================================
-           CTA
-           ============================================ */
-        .cta-section {
-            text-align: center;
-            padding: 10rem 2rem;
-            background: var(--bg-elevated);
-            position: relative;
-            overflow: hidden;
-        }
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(201, 168, 124, 0.06) 0%, transparent 60%);
-            pointer-events: none;
-            animation: ctaPulse 6s ease-in-out infinite;
-        }
-        @keyframes ctaPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.15); }
-        }
-        .cta-section h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 300;
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-        .cta-section p {
-            color: var(--text-secondary);
-            max-width: 550px;
-            margin: 0 auto 3rem;
-            line-height: 1.9;
-            font-size: 1.1rem;
-            position: relative;
-        }
-
-        /* ============================================
-           FOOTER
-           ============================================ */
-        .footer {
-            background: var(--bg);
-            border-top: 1px solid var(--border);
-            padding: 5rem 2rem 2rem;
-            text-align: center;
-            position: relative;
-        }
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 1px;
-            background: var(--gold);
-            opacity: 0.3;
-        }
-        .footer-brand {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        .footer-brand img {
-            height: 56px;
-            width: auto;
-            opacity: 0.8;
-        }
-        .footer-brand span {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            color: var(--text);
-        }
-        .footer-tagline {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 2.5rem;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            transition: color 0.4s ease;
-            position: relative;
-        }
-        .footer-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--gold);
-            transition: width 0.4s ease;
-        }
-        .footer-links a:hover { color: var(--gold); }
-        .footer-links a:hover::after { width: 100%; }
-        .footer-copy {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* ============================================
-           RESPONSIVE
-           ============================================ */
-        @media (max-width: 1024px) {
-            .philosophy-grid,
-            .cert-grid,
-            .testimonials { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 768px) {
-            .nav { padding: 1.2rem 1.5rem; }
-            .nav.scrolled { padding: 1rem 1.5rem; }
-            .nav-links { display: none; }
-            .menu-toggle { display: block; }
-            .hero { padding: 8rem 1.5rem 4rem; }
-            .hero-logo { width: 200px; }
-            .philosophy-grid,
-            .cert-grid,
-            .testimonials { grid-template-columns: 1fr; }
-            .pillar-inner { grid-template-columns: 1fr; padding: 0 0 2rem 0; }
-            .pillar-header { padding: 1.5rem 0; }
-            .pillar-name { font-size: 1.8rem; }
-            .role-grid { grid-template-columns: 1fr; gap: 3rem; }
-            .role-quote { font-size: 2rem; padding-left: 1rem; }
-            .timeline::before { left: 20px; }
-            .phase, .phase:nth-child(even) {
-                flex-direction: column;
-                padding-left: 50px;
-            }
-            .phase-content { width: 100%; }
-            .phase-dot { left: 20px; }
-            .flow-item:not(:last-child)::after { display: none; }
-            .section { padding: 5rem 1.5rem; }
-            .cta-section { padding: 6rem 1.5rem; }
-            .footer { padding: 3rem 1.5rem 1.5rem; }
-        }
-    </style>
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .section-header{grid-template-columns:1fr}
+  .phil-grid,.cert-grid,.test-grid,.journey-grid{grid-template-columns:1fr 1fr}
+  .role-grid{grid-template-columns:1fr;gap:4rem}
+  .flow-grid{flex-wrap:wrap}
+  .flow-item:not(:last-child)::after{display:none}
+  footer{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  nav{padding:1.5rem}
+  .nav-links{display:none}
+  .menu-btn{display:block}
+  .section{padding:6rem 1.5rem}
+  .hero-left{padding:7rem 1.5rem 4rem}
+  .phil-grid,.cert-grid,.test-grid,.journey-grid{grid-template-columns:1fr}
+  .pillar{grid-template-columns:1fr auto;gap:1rem}
+  .pillar-num{display:none}
+  .pillar-inner{grid-template-columns:1fr;padding:0 0 2rem 0}
+  .role-quote{font-size:2.5rem}
+  footer{padding:4rem 1.5rem 2rem}
+}
+</style>
 </head>
 <body>
-    <!-- Film Grain -->
-    <div class="grain"></div>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot" id="cursorDot"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
+<!-- PRELOADER -->
+<div id="preloader">
+  <img src="assets/logo.png" alt="" class="preloader-logo" style="filter:invert(1) brightness(2)">
+  <div class="preloader-line"></div>
+  <div class="preloader-text">Loading Experience</div>
+</div>
 
-    <!-- Preloader -->
-    <div class="preloader" id="preloader">
-        <img src="assets/logo.png" alt="Classroom Deconstruct" class="preloader-logo">
-        <div class="preloader-line"></div>
-        <div class="preloader-text">Loading Experience</div>
+<!-- NAV -->
+<nav>
+  <img src="assets/logo.png" alt="Classroom Deconstruct" style="filter:invert(1) brightness(2)">
+  <ul class="nav-links">
+    <li><a href="#philosophy">Philosophy</a></li>
+    <li><a href="#pillars">Pillars</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#facilitator">Facilitator</a></li>
+    <li><a href="#certification">Certify</a></li>
+  </ul>
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mob-nav" id="mobNav">
+  <button class="mob-close" onclick="toggleMenu()">×</button>
+  <a href="#philosophy" onclick="toggleMenu()">Philosophy</a>
+  <a href="#pillars" onclick="toggleMenu()">Pillars</a>
+  <a href="#journey" onclick="toggleMenu()">Journey</a>
+  <a href="#facilitator" onclick="toggleMenu()">Facilitator</a>
+  <a href="#certification" onclick="toggleMenu()">Certify</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-label">Classroom Deconstruct</div>
+    <h1 class="hero-title">Unlearn.<br><em>Unmask.</em><br>Transform.</h1>
+    <p class="hero-desc">A disruption in the traditional learning landscape. Neither a training, a leadership course, nor a wellness retreat. A unique space for those ready to peel back the layers and discover who they are underneath everything they've been taught to be.</p>
+    <div class="hero-cta">
+      <a href="#journey" class="btn-primary">Begin the Journey</a>
+      <a href="#philosophy" class="btn-text">Explore the Space →</a>
     </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-logo-wrap">
+      <img src="assets/logo.png" alt="">
+    </div>
+    <p class="hero-right-text">"Not from the outside in —<br>from the inside out."</p>
+  </div>
+</section>
 
-    <!-- Navigation -->
-    <nav class="nav" id="navbar">
-        <a href="#" class="nav-brand">
-            <img src="assets/logo.png" alt="">
-            <span>Classroom <em>Deconstruct</em></span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="#philosophy">Philosophy</a></li>
-            <li><a href="#pillars">Pillars</a></li>
-            <li><a href="#journey">Journey</a></li>
-            <li><a href="#facilitator">Facilitator</a></li>
-            <li><a href="#certification">Certify</a></li>
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-inner">
+    <span>Unlearn · Unmask · Transform ·</span>
+    <span>Presence over Performance ·</span>
+    <span>Truth over Answers ·</span>
+    <span>Being over Doing ·</span>
+    <span>Unlearn · Unmask · Transform ·</span>
+    <span>Presence over Performance ·</span>
+    <span>Truth over Answers ·</span>
+    <span>Being over Doing ·</span>
+  </div>
+</div>
+
+<!-- PHILOSOPHY -->
+<section class="section" id="philosophy">
+  <div class="section-header reveal">
+    <div class="section-label">The Foundation</div>
+    <div>
+      <h2 class="section-title">What is Classroom<br>Deconstruct?</h2>
+      <p class="section-subtitle">A deliberate slowdown — not to promote passivity, but to foster a deeper connection with our authentic selves. It disrupts ingrained patterns and reminds us of the importance of being real.</p>
+    </div>
+  </div>
+  <div class="phil-grid">
+    <div class="phil-card reveal d1">
+      <div class="phil-num">01</div>
+      <h3 class="phil-title">Unlearn</h3>
+      <p class="phil-desc">Let go of what was never truly yours. The inherited beliefs, the performed roles, the survival patterns that once protected you but now constrain you.</p>
+    </div>
+    <div class="phil-card reveal d2">
+      <div class="phil-num">02</div>
+      <h3 class="phil-title">Unmask</h3>
+      <p class="phil-desc">Remove the false roles and reveal the raw self. The mask didn't protect you — it protected your image. Beneath it, you are still here.</p>
+    </div>
+    <div class="phil-card reveal d3">
+      <div class="phil-num">03</div>
+      <h3 class="phil-title">Transform</h3>
+      <p class="phil-desc">Not by becoming someone else, but by returning to who you've always been. Stripping away false layers to reveal the authentic individual within.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="section section-alt" id="pillars">
+  <div class="section-header reveal">
+    <div class="section-label">The Architecture</div>
+    <div>
+      <h2 class="section-title">The Five<br>Pillars</h2>
+      <p class="section-subtitle">These aren't steps to be followed, but invitations to embrace different kinds of honesty. You don't move through them once — you cycle through them your entire life.</p>
+    </div>
+  </div>
+
+  <div class="pillar" onclick="togglePillar(this)">
+    <div class="pillar-num">01</div>
+    <div class="pillar-info">
+      <div class="pillar-name">LEAD</div>
+      <div class="pillar-elements">Listen · Engage · Awaken · Discern</div>
+    </div>
+    <div class="pillar-arrow">+</div>
+  </div>
+  <div class="pillar-body">
+    <div class="pillar-inner">
+      <div>
+        <p style="font-size:1.1rem;color:var(--text-light);line-height:1.9;margin-bottom:2rem"><strong style="color:var(--text);font-weight:400">The journey inward, before leading others.</strong><br><br>LEAD begins with stillness. Not taking charge — but learning to listen. You'll awaken to what's been running you, and start choosing differently, from clarity rather than default.</p>
+        <div class="pillar-quote">"This is not about leading others first. It's about leading yourself — through presence, participation, self-awareness, and choice."</div>
+      </div>
+      <div class="pillar-practices">
+        <h4>Core Practices</h4>
+        <ul>
+          <li>Stillness practice & body scan</li>
+          <li>Listening to resistance journaling</li>
+          <li>Pattern mirror & inherited belief mapping</li>
+          <li>Clarity compass & alignment reflection</li>
+          <li>One-sentence reflection circles</li>
         </ul>
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-    </nav>
-
-    <!-- Mobile Nav -->
-    <div class="mobile-nav" id="mobileNav">
-        <button class="mobile-nav-close" onclick="toggleMenu()">×</button>
-        <a href="#philosophy" onclick="toggleMenu()">Philosophy</a>
-        <a href="#pillars" onclick="toggleMenu()">Pillars</a>
-        <a href="#journey" onclick="toggleMenu()">Journey</a>
-        <a href="#facilitator" onclick="toggleMenu()">Facilitator</a>
-        <a href="#certification" onclick="toggleMenu()">Certify</a>
+      </div>
     </div>
+  </div>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-bg"></div>
-        <img src="assets/logo.png" alt="Classroom Deconstruct" class="hero-logo">
-        <h1>Unlearn.<br><em>Unmask.</em><br>Transform.</h1>
-        <p class="hero-tagline">Not from the outside in — from the inside out</p>
-        <p class="hero-desc">A disruption in the traditional learning landscape. Neither a training, a leadership course, nor a wellness retreat. A unique space for those ready to peel back the layers, question their beliefs, and discover who they are underneath everything they've been taught to be.</p>
-        <div class="hero-cta">
-            <a href="#journey" class="btn">Begin the Journey</a>
-            <a href="#philosophy" class="btn btn-outline">Explore the Space</a>
-        </div>
-        <div class="scroll-indicator">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
-        </div>
-    </section>
-
-    <!-- Philosophy -->
-    <section class="section" id="philosophy">
-        <div class="section-header reveal">
-            <span class="section-label">The Foundation</span>
-            <h2 class="section-title">What is Classroom<br>Deconstruct?</h2>
-            <p class="section-subtitle">A deliberate slowdown — not to promote passivity, but to foster a deeper connection with our authentic selves. It disrupts ingrained patterns and reminds us of the importance of being real.</p>
-        </div>
-        <div class="philosophy-grid">
-            <div class="philosophy-card reveal reveal-delay-1">
-                <span class="card-num">01</span>
-                <h3>Unlearn</h3>
-                <p>Let go of what was never truly yours. The inherited beliefs, the performed roles, the survival patterns that once protected you but now constrain you. This is not about acquiring new knowledge — it's about releasing what doesn't serve.</p>
-            </div>
-            <div class="philosophy-card reveal reveal-delay-2">
-                <span class="card-num">02</span>
-                <h3>Unmask</h3>
-                <p>Remove the false roles and reveal the raw self. The mask didn't protect you — it protected your image. Beneath it, you are still here. This is the courage to be seen without the costume.</p>
-            </div>
-            <div class="philosophy-card reveal reveal-delay-3">
-                <span class="card-num">03</span>
-                <h3>Transform</h3>
-                <p>Not by becoming someone else, but by returning to who you've always been. This journey isn't about adopting new personas; it's about stripping away false layers to reveal the authentic individual within.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pillars -->
-    <div class="pillars-section" id="pillars">
-        <div class="pillars-container">
-            <div class="section-header reveal">
-                <span class="section-label">The Architecture</span>
-                <h2 class="section-title">The Five Pillars</h2>
-                <p class="section-subtitle">These aren't steps to be followed, but invitations to embrace different kinds of honesty. You don't move through them once — you cycle through them your entire life.</p>
-            </div>
-            <div class="pillars">
-                <!-- LEAD -->
-                <div class="pillar" onclick="togglePillar(this)">
-                    <div class="pillar-header">
-                        <div class="pillar-icon lead">L</div>
-                        <div class="pillar-title-group">
-                            <div class="pillar-name">LEAD</div>
-                            <div class="pillar-elements">Listen · Engage · Awaken · Discern</div>
-                        </div>
-                        <div class="pillar-toggle">+</div>
-                    </div>
-                    <div class="pillar-body">
-                        <div class="pillar-inner">
-                            <div class="pillar-desc">
-                                <strong>The journey inward, before leading others.</strong><br><br>
-                                LEAD begins with stillness. Not taking charge — but learning to listen. You'll awaken to what's been running you, and start choosing differently, from clarity rather than default.
-                                <div class="pillar-quote">"This is not about leading others first. It's about leading yourself — through presence, participation, self-awareness, and choice."</div>
-                            </div>
-                            <div class="pillar-practices">
-                                <h4>Core Practices</h4>
-                                <ul>
-                                    <li>Stillness practice & body scan</li>
-                                    <li>Listening to resistance journaling</li>
-                                    <li>Pattern mirror & inherited belief mapping</li>
-                                    <li>Clarity compass & alignment reflection</li>
-                                    <li>One-sentence reflection circles</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- STAY -->
-                <div class="pillar" onclick="togglePillar(this)">
-                    <div class="pillar-header">
-                        <div class="pillar-icon stay">S</div>
-                        <div class="pillar-title-group">
-                            <div class="pillar-name">STAY</div>
-                            <div class="pillar-elements">Settle · Track · Allow · Yield</div>
-                        </div>
-                        <div class="pillar-toggle">+</div>
-                    </div>
-                    <div class="pillar-body">
-                        <div class="pillar-inner">
-                            <div class="pillar-desc">
-                                <strong>The art of presence under pressure.</strong><br><br>
-                                STAY teaches you to remain. With discomfort. With emotion. With the truth that just surfaced. Most of us escape the moment we feel something — this pillar trains us to stay.
-                                <div class="pillar-quote">"We settle not to escape reality — but to meet it from the ground."</div>
-                            </div>
-                            <div class="pillar-practices">
-                                <h4>Core Practices</h4>
-                                <ul>
-                                    <li>Arrival breath & body check</li>
-                                    <li>Grounding scan & anchoring</li>
-                                    <li>Felt-sense body tracking</li>
-                                    <li>Emotional allowing without resistance</li>
-                                    <li>Surrender & yielding gestures</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RISE -->
-                <div class="pillar" onclick="togglePillar(this)">
-                    <div class="pillar-header">
-                        <div class="pillar-icon rise">R</div>
-                        <div class="pillar-title-group">
-                            <div class="pillar-name">RISE</div>
-                            <div class="pillar-elements">Root · Inspire · Serve · Embody</div>
-                        </div>
-                        <div class="pillar-toggle">+</div>
-                    </div>
-                    <div class="pillar-body">
-                        <div class="pillar-inner">
-                            <div class="pillar-desc">
-                                <strong>Reclaiming authenticity, vision, and purpose.</strong><br><br>
-                                RISE isn't about climbing. It's about alignment — with your values, your fire, your service, and your embodiment. This is where vision meets action.
-                                <div class="pillar-quote">"Rooting is how we rise with clarity — not louder, but truer."</div>
-                            </div>
-                            <div class="pillar-practices">
-                                <h4>Core Practices</h4>
-                                <ul>
-                                    <li>Values mapping & root identification</li>
-                                    <li>Memory drop-in for inspiration</li>
-                                    <li>Gift mapping & authentic service</li>
-                                    <li>Integrity gap mapping</li>
-                                    <li>Embodiment through consistent action</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- BURN -->
-                <div class="pillar" onclick="togglePillar(this)">
-                    <div class="pillar-header">
-                        <div class="pillar-icon burn">B</div>
-                        <div class="pillar-title-group">
-                            <div class="pillar-name">BURN</div>
-                            <div class="pillar-elements">Break · Unmask · Reveal · Nourish</div>
-                        </div>
-                        <div class="pillar-toggle">+</div>
-                    </div>
-                    <div class="pillar-body">
-                        <div class="pillar-inner">
-                            <div class="pillar-desc">
-                                <strong>Dismantling what no longer serves.</strong><br><br>
-                                BURN is about disruption. You'll break what's no longer true, unmask the roles you've played, reveal something raw — then nourish what remains. This isn't collapse. It's transformation.
-                                <div class="pillar-quote">"Breakage isn't failure — it's the beginning of something real."</div>
-                            </div>
-                            <div class="pillar-practices">
-                                <h4>Core Practices</h4>
-                                <ul>
-                                    <li>False structure mapping & breaking</li>
-                                    <li>Mask mapping & unmasking circle</li>
-                                    <li>Truth threshold writing & reveal</li>
-                                    <li>Write & tear ritual</li>
-                                    <li>Self-tending & nourishment ritual</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- HOLD -->
-                <div class="pillar" onclick="togglePillar(this)">
-                    <div class="pillar-header">
-                        <div class="pillar-icon hold">H</div>
-                        <div class="pillar-title-group">
-                            <div class="pillar-name">HOLD</div>
-                            <div class="pillar-elements">Hear · Offer · Lean · Deepen</div>
-                        </div>
-                        <div class="pillar-toggle">+</div>
-                    </div>
-                    <div class="pillar-body">
-                        <div class="pillar-inner">
-                            <div class="pillar-desc">
-                                <strong>Becoming a safe space for others to heal and transform.</strong><br><br>
-                                HOLD is where the work becomes real. You'll learn to truly listen, to offer space without rescuing, to lean when you're tired, and to deepen — not for intensity, but for integrity.
-                                <div class="pillar-quote">"To hold is to remain. To witness without rushing. To support without ego. To return — even when it would be easier to retreat."</div>
-                            </div>
-                            <div class="pillar-practices">
-                                <h4>Core Practices</h4>
-                                <ul>
-                                    <li>Silent listening dyads</li>
-                                    <li>Role awareness mapping</li>
-                                    <li>Support mapping & trust lean</li>
-                                    <li>Depth vs. intensity mapping</li>
-                                    <li>Commitment to sustained presence</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="pillar" onclick="togglePillar(this)">
+    <div class="pillar-num">02</div>
+    <div class="pillar-info">
+      <div class="pillar-name">STAY</div>
+      <div class="pillar-elements">Settle · Track · Allow · Yield</div>
     </div>
-
-    <!-- Journey -->
-    <section class="timeline-section" id="journey">
-        <div class="section-header reveal">
-            <span class="section-label">The Path</span>
-            <h2 class="section-title">10-Week Facilitator<br>Training</h2>
-            <p class="section-subtitle">A 10-week immersive training for individuals ready to lead with presence, truth, and depth. Not about teaching — about holding space, embodying truth, and facilitating transformation from the inside out.</p>
-        </div>
-        <div class="timeline">
-            <div class="timeline-line"></div>
-            <div class="phase reveal">
-                <div class="phase-content">
-                    <div class="phase-weeks">Weeks 1 — 2</div>
-                    <div class="phase-title">Foundation</div>
-                    <div class="phase-desc">Establishing the container. Understanding the philosophy, intention, and origins of Classroom Deconstruct. Learning the role of the facilitator as space holder versus teacher. Building psychological safety, trauma sensitivity, and presence.</div>
-                    <ul class="phase-modules">
-                        <li>Orientation & Philosophy</li>
-                        <li>Holding Space Foundations</li>
-                    </ul>
-                </div>
-                <div class="phase-dot"></div>
-            </div>
-            <div class="phase reveal">
-                <div class="phase-content">
-                    <div class="phase-weeks">Weeks 3 — 7</div>
-                    <div class="phase-title">Pillar Embodiment</div>
-                    <div class="phase-desc">Deep experiential immersion into each of the five pillars. Each week includes live sessions, peer-led practice, somatic awareness, and journaling integration. This is where theory becomes lived experience.</div>
-                    <ul class="phase-modules">
-                        <li>LEAD — Active presence, curiosity, inner clarity</li>
-                        <li>STAY — Emotional regulation, resilience, softness</li>
-                        <li>RISE — Purpose, vision, authentic motivation</li>
-                        <li>BURN — Vulnerability, truth-telling, transformation</li>
-                        <li>HOLD — Deep listening, support, containment</li>
-                    </ul>
-                </div>
-                <div class="phase-dot"></div>
-            </div>
-            <div class="phase reveal">
-                <div class="phase-content">
-                    <div class="phase-weeks">Weeks 8 — 10</div>
-                    <div class="phase-title">Mastery & Integration</div>
-                    <div class="phase-desc">Culminating in the final practicum — leading a 60-90 minute session with a real group, observed live and assessed using the CD Rubric. Closing with integration, personal vows, and entry into the facilitator network.</div>
-                    <ul class="phase-modules">
-                        <li>Facilitation Skills Masterclass</li>
-                        <li>Final Practicum & Assessment</li>
-                        <li>Integration, Closing & Certification</li>
-                    </ul>
-                </div>
-                <div class="phase-dot"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Facilitator Role -->
-    <div class="role-section" id="facilitator">
-        <div class="role-grid">
-            <div class="reveal">
-                <p class="role-quote">"You are not here to teach. You are not the authority. You are here to hold the container — with <span>presence</span>, with <span>steadiness</span>, and with <span>care</span>."</p>
-            </div>
-            <div class="role-details reveal">
-                <h3>The Facilitator Role</h3>
-                <ul class="role-list">
-                    <li>You are a space holder, not a performer</li>
-                    <li>You model presence, not perfection</li>
-                    <li>You listen more than you speak</li>
-                    <li>You trust the group's wisdom</li>
-                    <li>You embody what you teach</li>
-                    <li>Let the tools do the work. Let the space breathe.</li>
-                </ul>
-            </div>
-        </div>
+    <div class="pillar-arrow">+</div>
+  </div>
+  <div class="pillar-body">
+    <div class="pillar-inner">
+      <div>
+        <p style="font-size:1.1rem;color:var(--text-light);line-height:1.9;margin-bottom:2rem"><strong style="color:var(--text);font-weight:400">The art of presence under pressure.</strong><br><br>STAY teaches you to remain. With discomfort. With emotion. With the truth that just surfaced. Most of us escape the moment we feel something — this pillar trains us to stay.</p>
+        <div class="pillar-quote">"We settle not to escape reality — but to meet it from the ground."</div>
+      </div>
+      <div class="pillar-practices">
+        <h4>Core Practices</h4>
+        <ul>
+          <li>Arrival breath & body check</li>
+          <li>Grounding scan & anchoring</li>
+          <li>Felt-sense body tracking</li>
+          <li>Emotional allowing without resistance</li>
+          <li>Surrender & yielding gestures</li>
+        </ul>
+      </div>
     </div>
+  </div>
 
-    <!-- Session Flow -->
-    <div class="flow-section">
-        <div class="section-header reveal">
-            <span class="section-label">The Architecture</span>
-            <h2 class="section-title">Session Flow</h2>
-            <p class="section-subtitle">Each session follows a simple but profound rhythm. Not to fix, but to hold. Not to perform, but to be present.</p>
-        </div>
-        <div class="flow-grid">
-            <div class="flow-item reveal reveal-delay-1">
-                <div class="flow-icon">◯</div>
-                <div class="flow-title">Opening</div>
-                <div class="flow-desc">A line, a pause, or a drop-in ritual to arrive</div>
-            </div>
-            <div class="flow-item reveal reveal-delay-2">
-                <div class="flow-icon">◇</div>
-                <div class="flow-title">Core Practice</div>
-                <div class="flow-desc">Journaling, sharing, silence, or movement</div>
-            </div>
-            <div class="flow-item reveal reveal-delay-3">
-                <div class="flow-icon">◎</div>
-                <div class="flow-title">Reflection</div>
-                <div class="flow-desc">Circle, debrief, or witnessing together</div>
-            </div>
-            <div class="flow-item reveal">
-                <div class="flow-icon">◉</div>
-                <div class="flow-title">Closure</div>
-                <div class="flow-desc">Breath, holding — not fixing</div>
-            </div>
-        </div>
+  <div class="pillar" onclick="togglePillar(this)">
+    <div class="pillar-num">03</div>
+    <div class="pillar-info">
+      <div class="pillar-name">RISE</div>
+      <div class="pillar-elements">Root · Inspire · Serve · Embody</div>
     </div>
-
-    <!-- Certification -->
-    <section class="cert-section" id="certification">
-        <div class="section-header reveal">
-            <span class="section-label">The Standard</span>
-            <h2 class="section-title">Certification<br>Criteria</h2>
-            <p class="section-subtitle">Certification is not about performance. It's about embodiment. Demonstrating that you can hold space with presence, integrity, and care.</p>
-        </div>
-        <div class="cert-grid">
-            <div class="cert-card reveal reveal-delay-1">
-                <span class="cert-num">01</span>
-                <div class="cert-title">Complete All Modules</div>
-                <div class="cert-desc">Attend every session. Participate in all peer practice rounds. Engage fully in journaling, group check-ins, and debriefs.</div>
-            </div>
-            <div class="cert-card reveal reveal-delay-2">
-                <span class="cert-num">02</span>
-                <div class="cert-title">Weekly Reflections</div>
-                <div class="cert-desc">Complete workbook reflections for each pillar. Show insight, integration, and awareness. Submit 1-page summary each week.</div>
-            </div>
-            <div class="cert-card reveal reveal-delay-3">
-                <span class="cert-num">03</span>
-                <div class="cert-title">Final Practicum</div>
-                <div class="cert-desc">Facilitate a 60-90 minute session embodying 1 or more CD pillars. Observed live and assessed using the CD Rubric (Pass: 22+/30).</div>
-            </div>
-            <div class="cert-card reveal">
-                <span class="cert-num">04</span>
-                <div class="cert-title">Peer & Mentor Feedback</div>
-                <div class="cert-desc">Openly receive group and facilitator feedback. Apply feedback where possible. Demonstrate growth and responsiveness.</div>
-            </div>
-            <div class="cert-card reveal reveal-delay-1">
-                <span class="cert-num">05</span>
-                <div class="cert-title">5 Core Qualities</div>
-                <div class="cert-desc">Presence, Integrity, Responsiveness, Container-Holding, Self-Awareness. Assessed across 6 dimensions on a 1-5 scale.</div>
-            </div>
-            <div class="cert-card reveal reveal-delay-2">
-                <span class="cert-num">06</span>
-                <div class="cert-title">Final Reflection</div>
-                <div class="cert-desc">"What I now hold, and how I will lead." May be written, audio, or video format. Submitted before closing ceremony.</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <div class="testimonials-section">
-        <div class="section-header reveal">
-            <span class="section-label">The Experience</span>
-            <h2 class="section-title">What Participants<br>Say</h2>
-        </div>
-        <div class="testimonials">
-            <div class="testimonial reveal reveal-delay-1">
-                <p class="testimonial-text">I left not feeling merely motivated, but deeply "undone" in the most positive sense. I gained clarity, courage, and a profound sense of groundedness.</p>
-                <p class="testimonial-author">— Program Participant</p>
-            </div>
-            <div class="testimonial reveal reveal-delay-2">
-                <p class="testimonial-text">The focus shifts from external validation to internal alignment. I became quieter, more intentional, and more confident in my authentic self.</p>
-                <p class="testimonial-author">— Certified Facilitator</p>
-            </div>
-            <div class="testimonial reveal reveal-delay-3">
-                <p class="testimonial-text">This isn't about being "good" at listening. It's about noticing when we can't. That awareness alone changed everything for me.</p>
-                <p class="testimonial-author">— LEAD Pillar Graduate</p>
-            </div>
-        </div>
+    <div class="pillar-arrow">+</div>
+  </div>
+  <div class="pillar-body">
+    <div class="pillar-inner">
+      <div>
+        <p style="font-size:1.1rem;color:var(--text-light);line-height:1.9;margin-bottom:2rem"><strong style="color:var(--text);font-weight:400">Reclaiming authenticity, vision, and purpose.</strong><br><br>RISE isn't about climbing. It's about alignment — with your values, your fire, your service, and your embodiment. This is where vision meets action.</p>
+        <div class="pillar-quote">"Rooting is how we rise with clarity — not louder, but truer."</div>
+      </div>
+      <div class="pillar-practices">
+        <h4>Core Practices</h4>
+        <ul>
+          <li>Values mapping & root identification</li>
+          <li>Memory drop-in for inspiration</li>
+          <li>Gift mapping & authentic service</li>
+          <li>Integrity gap mapping</li>
+          <li>Embodiment through consistent action</li>
+        </ul>
+      </div>
     </div>
+  </div>
 
-    <!-- CTA -->
-    <div class="cta-section" id="contact">
-        <div class="reveal">
-            <h2>The Invitation</h2>
-            <p>We don't promise transformation. We promise a safe and supportive space for you to confront your truth. And when that happens, transformation becomes inevitable.</p>
-            <div class="hero-cta">
-                <a href="#" class="btn">Apply to Join</a>
-                <a href="#" class="btn btn-outline">Request Information</a>
-            </div>
-        </div>
+  <div class="pillar" onclick="togglePillar(this)">
+    <div class="pillar-num">04</div>
+    <div class="pillar-info">
+      <div class="pillar-name">BURN</div>
+      <div class="pillar-elements">Break · Unmask · Reveal · Nourish</div>
     </div>
+    <div class="pillar-arrow">+</div>
+  </div>
+  <div class="pillar-body">
+    <div class="pillar-inner">
+      <div>
+        <p style="font-size:1.1rem;color:var(--text-light);line-height:1.9;margin-bottom:2rem"><strong style="color:var(--text);font-weight:400">Dismantling what no longer serves.</strong><br><br>BURN is about disruption. You'll break what's no longer true, unmask the roles you've played, reveal something raw — then nourish what remains. This isn't collapse. It's transformation.</p>
+        <div class="pillar-quote">"Breakage isn't failure — it's the beginning of something real."</div>
+      </div>
+      <div class="pillar-practices">
+        <h4>Core Practices</h4>
+        <ul>
+          <li>False structure mapping & breaking</li>
+          <li>Mask mapping & unmasking circle</li>
+          <li>Truth threshold writing & reveal</li>
+          <li>Write & tear ritual</li>
+          <li>Self-tending & nourishment ritual</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-brand">
-            <img src="assets/logo.png" alt="">
-            <span>Classroom Deconstruct</span>
-        </div>
-        <div class="footer-tagline">Unlearn. Unmask. Transform.</div>
-        <div class="footer-links">
-            <a href="#philosophy">Philosophy</a>
-            <a href="#pillars">Pillars</a>
-            <a href="#journey">Training</a>
-            <a href="#facilitator">Facilitator</a>
-            <a href="#certification">Certification</a>
-        </div>
-        <div class="footer-copy">Classroom Deconstruct — A space where the performance ends, and your real self begins to speak.</div>
-    </footer>
+  <div class="pillar" onclick="togglePillar(this)">
+    <div class="pillar-num">05</div>
+    <div class="pillar-info">
+      <div class="pillar-name">HOLD</div>
+      <div class="pillar-elements">Hear · Offer · Lean · Deepen</div>
+    </div>
+    <div class="pillar-arrow">+</div>
+  </div>
+  <div class="pillar-body">
+    <div class="pillar-inner">
+      <div>
+        <p style="font-size:1.1rem;color:var(--text-light);line-height:1.9;margin-bottom:2rem"><strong style="color:var(--text);font-weight:400">Becoming a safe space for others to heal and transform.</strong><br><br>HOLD is where the work becomes real. You'll learn to truly listen, to offer space without rescuing, to lean when you're tired, and to deepen — not for intensity, but for integrity.</p>
+        <div class="pillar-quote">"To hold is to remain. To witness without rushing. To support without ego. To return — even when it would be easier to retreat."</div>
+      </div>
+      <div class="pillar-practices">
+        <h4>Core Practices</h4>
+        <ul>
+          <li>Silent listening dyads</li>
+          <li>Role awareness mapping</li>
+          <li>Support mapping & trust lean</li>
+          <li>Depth vs. intensity mapping</li>
+          <li>Commitment to sustained presence</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        // Preloader
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('preloader').classList.add('done');
-            }, 1800);
-        });
+<!-- JOURNEY -->
+<section class="section" id="journey">
+  <div class="section-header reveal">
+    <div class="section-label">The Path</div>
+    <div>
+      <h2 class="section-title">10-Week<br>Facilitator Training</h2>
+      <p class="section-subtitle">A 10-week immersive training for individuals ready to lead with presence, truth, and depth. Not about teaching — about holding space, embodying truth, and facilitating transformation from the inside out.</p>
+    </div>
+  </div>
+  <div class="journey-grid">
+    <div class="journey-card reveal d1">
+      <div class="journey-week">Weeks 01 — 02</div>
+      <h3 class="journey-title">Foundation</h3>
+      <p class="journey-desc">Establishing the container. Understanding the philosophy, intention, and origins of Classroom Deconstruct. Learning the role of the facilitator as space holder versus teacher.</p>
+      <ul class="journey-list">
+        <li>Orientation & Philosophy</li>
+        <li>Holding Space Foundations</li>
+      </ul>
+    </div>
+    <div class="journey-card reveal d2">
+      <div class="journey-week">Weeks 03 — 07</div>
+      <h3 class="journey-title">Pillar Embodiment</h3>
+      <p class="journey-desc">Deep experiential immersion into each of the five pillars. Each week includes live sessions, peer-led practice, somatic awareness, and journaling integration.</p>
+      <ul class="journey-list">
+        <li>LEAD — Active presence, inner clarity</li>
+        <li>STAY — Emotional regulation, softness</li>
+        <li>RISE — Purpose, authentic motivation</li>
+        <li>BURN — Vulnerability, transformation</li>
+        <li>HOLD — Deep listening, containment</li>
+      </ul>
+    </div>
+    <div class="journey-card reveal d3">
+      <div class="journey-week">Weeks 08 — 10</div>
+      <h3 class="journey-title">Mastery & Integration</h3>
+      <p class="journey-desc">Culminating in the final practicum — leading a 60-90 minute session with a real group, observed live and assessed using the CD Rubric.</p>
+      <ul class="journey-list">
+        <li>Facilitation Skills Masterclass</li>
+        <li>Final Practicum & Assessment</li>
+        <li>Integration, Closing & Certification</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-        // Custom Cursor
-        const cursorDot = document.getElementById('cursorDot');
-        const cursorRing = document.getElementById('cursorRing');
-        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+<!-- ROLE -->
+<section class="section section-alt" id="facilitator">
+  <div class="role-grid">
+    <div class="reveal">
+      <p class="role-quote">"You are not here to teach. You are not the authority. You are here to hold the container — with <span>presence</span>, with <span>steadiness</span>, and with <span>care</span>."</p>
+    </div>
+    <div class="reveal d2">
+      <ul class="role-list">
+        <li>You are a space holder, not a performer</li>
+        <li>You model presence, not perfection</li>
+        <li>You listen more than you speak</li>
+        <li>You trust the group's wisdom</li>
+        <li>You embody what you teach</li>
+        <li>Let the tools do the work. Let the space breathe.</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorDot.style.left = mouseX + 'px';
-            cursorDot.style.top = mouseY + 'px';
-        });
+<!-- FLOW -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-label">The Architecture</div>
+    <div>
+      <h2 class="section-title">Session<br>Flow</h2>
+      <p class="section-subtitle">Each session follows a simple but profound rhythm. Not to fix, but to hold. Not to perform, but to be present.</p>
+    </div>
+  </div>
+  <div class="flow-grid">
+    <div class="flow-item reveal d1">
+      <div class="flow-num">01</div>
+      <div class="flow-title">Opening</div>
+      <div class="flow-desc">A line, a pause, or a drop-in ritual to arrive</div>
+    </div>
+    <div class="flow-item reveal d2">
+      <div class="flow-num">02</div>
+      <div class="flow-title">Core Practice</div>
+      <div class="flow-desc">Journaling, sharing, silence, or movement</div>
+    </div>
+    <div class="flow-item reveal d3">
+      <div class="flow-num">03</div>
+      <div class="flow-title">Reflection</div>
+      <div class="flow-desc">Circle, debrief, or witnessing together</div>
+    </div>
+    <div class="flow-item reveal">
+      <div class="flow-num">04</div>
+      <div class="flow-title">Closure</div>
+      <div class="flow-desc">Breath, holding — not fixing</div>
+    </div>
+  </div>
+</section>
 
-        function animateCursor() {
-            ringX += (mouseX - ringX) * 0.15;
-            ringY += (mouseY - ringY) * 0.15;
-            cursorRing.style.left = ringX + 'px';
-            cursorRing.style.top = ringY + 'px';
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
+<!-- CERTIFICATION -->
+<section class="section section-alt" id="certification">
+  <div class="section-header reveal">
+    <div class="section-label">The Standard</div>
+    <div>
+      <h2 class="section-title">Certification<br>Criteria</h2>
+      <p class="section-subtitle">Certification is not about performance. It's about embodiment. Demonstrating that you can hold space with presence, integrity, and care.</p>
+    </div>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-card reveal d1">
+      <div class="cert-num">01</div>
+      <div class="cert-title">Complete All Modules</div>
+      <div class="cert-desc">Attend every session. Participate in all peer practice rounds. Engage fully in journaling, group check-ins, and debriefs.</div>
+    </div>
+    <div class="cert-card reveal d2">
+      <div class="cert-num">02</div>
+      <div class="cert-title">Weekly Reflections</div>
+      <div class="cert-desc">Complete workbook reflections for each pillar. Show insight, integration, and awareness. Submit 1-page summary each week.</div>
+    </div>
+    <div class="cert-card reveal d3">
+      <div class="cert-num">03</div>
+      <div class="cert-title">Final Practicum</div>
+      <div class="cert-desc">Facilitate a 60-90 minute session embodying 1 or more CD pillars. Observed live and assessed using the CD Rubric.</div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-num">04</div>
+      <div class="cert-title">Peer & Mentor Feedback</div>
+      <div class="cert-desc">Openly receive group and facilitator feedback. Apply feedback where possible. Demonstrate growth and responsiveness.</div>
+    </div>
+    <div class="cert-card reveal d1">
+      <div class="cert-num">05</div>
+      <div class="cert-title">5 Core Qualities</div>
+      <div class="cert-desc">Presence, Integrity, Responsiveness, Container-Holding, Self-Awareness. Assessed across 6 dimensions on a 1-5 scale.</div>
+    </div>
+    <div class="cert-card reveal d2">
+      <div class="cert-num">06</div>
+      <div class="cert-title">Final Reflection</div>
+      <div class="cert-desc">"What I now hold, and how I will lead." May be written, audio, or video format. Submitted before closing ceremony.</div>
+    </div>
+  </div>
+</section>
 
-        // Hover states for cursor
-        document.querySelectorAll('a, button, .pillar-header, .card, .cert-card, .flow-item').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-        });
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-label">The Experience</div>
+    <div>
+      <h2 class="section-title">What Participants<br>Say</h2>
+    </div>
+  </div>
+  <div class="test-grid">
+    <div class="test-card reveal d1">
+      <p class="test-quote">"I left not feeling merely motivated, but deeply 'undone' in the most positive sense. I gained clarity, courage, and a profound sense of groundedness."</p>
+      <p class="test-author">— Program Participant</p>
+    </div>
+    <div class="test-card reveal d2">
+      <p class="test-quote">"The focus shifts from external validation to internal alignment. I became quieter, more intentional, and more confident in my authentic self."</p>
+      <p class="test-author">— Certified Facilitator</p>
+    </div>
+    <div class="test-card reveal d3">
+      <p class="test-quote">"This isn't about being 'good' at listening. It's about noticing when we can't. That awareness alone changed everything for me."</p>
+      <p class="test-author">— LEAD Pillar Graduate</p>
+    </div>
+  </div>
+</section>
 
-        // Nav scroll effect
-        window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 100);
-        });
+<!-- CTA -->
+<div class="cta" id="contact">
+  <h2 class="cta-title reveal">The Invitation</h2>
+  <p class="cta-desc reveal d1">We don't promise transformation. We promise a safe and supportive space for you to confront your truth. And when that happens, transformation becomes inevitable.</p>
+  <a href="#" class="cta-btn reveal d2">Apply to Join</a>
+</div>
 
-        // Mobile menu
-        function toggleMenu() {
-            document.getElementById('mobileNav').classList.toggle('active');
-        }
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="Classroom Deconstruct">
+      <p>A disruption in the traditional<br>learning landscape.</p>
+    </div>
+  </div>
+  <div>
+    <div class="footer-title">Navigation</div>
+    <ul class="footer-links">
+      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#pillars">Pillars</a></li>
+      <li><a href="#journey">Training</a></li>
+      <li><a href="#facilitator">Facilitator</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-title">Connect</div>
+    <ul class="footer-links">
+      <li><a href="#certification">Certification</a></li>
+      <li><a href="#contact">Apply</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-copy">© Classroom Deconstruct. A space where the performance ends, and your real self begins to speak.</div>
+</footer>
 
-        // Pillar accordion
-        function togglePillar(el) {
-            document.querySelectorAll('.pillar').forEach(p => {
-                if (p !== el) p.classList.remove('active');
-            });
-            el.classList.toggle('active');
-        }
+<script>
+// Preloader
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('preloader').classList.add('done'),2000);
+});
 
-        // Scroll reveal with IntersectionObserver
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -60px 0px'
-        };
+// Mobile menu
+function toggleMenu(){
+  document.getElementById('mobNav').classList.toggle('active');
+}
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+// Pillar accordion
+function togglePillar(el){
+  document.querySelectorAll('.pillar').forEach(p=>{if(p!==el)p.classList.remove('active')});
+  el.classList.toggle('active');
+}
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// Scroll reveal
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.1,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-    </script>
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
 </body>
 </html>
