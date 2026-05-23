@@ -1246,13 +1246,14 @@ document.addEventListener('keydown',(e)=>{
   bottom:2rem;right:2rem;
   z-index:200;
   font-family:'Inter',sans-serif;
+  cursor:auto;
 }
 .chat-btn{
   width:56px;height:56px;
   border-radius:50%;
   background:var(--accent);
   border:none;
-  cursor:none;
+  cursor:auto;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -1283,6 +1284,7 @@ document.addEventListener('keydown',(e)=>{
   opacity:0;
   transform:translateY(20px) scale(.95);
   pointer-events:none;
+  visibility:hidden;
   transition:all .5s cubic-bezier(.23,1,.32,1);
   box-shadow:0 30px 60px rgba(0,0,0,.6);
 }
@@ -1290,6 +1292,7 @@ document.addEventListener('keydown',(e)=>{
   opacity:1;
   transform:translateY(0) scale(1);
   pointer-events:auto;
+  visibility:visible;
 }
 .chat-header{
   padding:1.5rem;
@@ -1404,6 +1407,7 @@ document.addEventListener('keydown',(e)=>{
   flex:1;
   background:transparent;
   border:1px solid var(--border);
+  cursor:auto;
   border-radius:12px;
   padding:.8rem 1rem;
   color:var(--text);
@@ -1423,7 +1427,7 @@ document.addEventListener('keydown',(e)=>{
   display:flex;
   align-items:center;
   justify-content:center;
-  cursor:none;
+  cursor:auto;
   transition:all .4s ease;
   flex-shrink:0;
 }
@@ -1447,7 +1451,7 @@ document.addEventListener('keydown',(e)=>{
   font-size:.75rem;
   color:var(--text-faint);
   background:transparent;
-  cursor:none;
+  cursor:auto;
   transition:all .4s ease;
   font-family:'Inter',sans-serif;
   font-weight:300;
@@ -1499,6 +1503,7 @@ document.addEventListener('keydown',(e)=>{
 
 <script>
 (function(){
+  console.log('Chatbot loaded');
   const chatPanel=document.getElementById('chatPanel');
   const chatBtn=document.getElementById('chatBtn');
   const chatBody=document.getElementById('chatBody');
