@@ -207,11 +207,11 @@ html.lenis, html.lenis body{height:auto}
   min-height:100vh;
   display:flex;
   flex-direction:column;
-  justify-content:center;
+  justify-content:flex-start;
   align-items:center;
   position:relative;
   overflow:hidden;
-  padding:4rem;
+  padding:12vh 4rem 10rem;
 }
 .hero-orb{
   position:absolute;
@@ -230,7 +230,8 @@ html.lenis, html.lenis body{height:auto}
   position:relative;
   z-index:2;
   text-align:center;
-  margin-bottom:4rem;
+  margin-bottom:3rem;
+  margin-top:4rem;
 }
 .hero-logo{
   width:280px;
@@ -273,26 +274,26 @@ html.lenis, html.lenis body{height:auto}
 }
 .hero-scroll{
   position:absolute;
-  bottom:1.5rem;
+  bottom:2.5rem;
   left:50%;
   transform:translateX(-50%);
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:.5rem;
+  gap:.75rem;
   opacity:0;
   animation:fadeUp 1s ease 4s forwards;
   pointer-events:none;
 }
 .hero-scroll span{
-  font-size:.55rem;
-  letter-spacing:3px;
+  font-size:.6rem;
+  letter-spacing:4px;
   text-transform:uppercase;
   color:var(--text-faint);
 }
 .hero-scroll-line{
   width:1px;
-  height:30px;
+  height:40px;
   background:linear-gradient(to bottom,var(--accent),transparent);
   animation:scrollPulse 3s ease-in-out infinite;
 }
@@ -1241,4 +1242,348 @@ document.addEventListener('keydown',(e)=>{
 
 
 
+<!-- AI CHATBOT -->
+<style>
+#cd-chat-btn{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:#c9a87c;
+  border:1px solid #c9a87c;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:0 4px 20px rgba(201,168,124,.3);
+}
+#cd-chat-btn svg{
+  width:24px;
+  height:24px;
+  stroke:#060606;
+  fill:none;
+  stroke-width:2;
+}
+#cd-chat-panel{
+  position:fixed;
+  bottom:90px;
+  right:24px;
+  width:360px;
+  max-height:500px;
+  background:#0c0c0c;
+  border:1px solid #141414;
+  border-radius:12px;
+  z-index:9999;
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.8);
+}
+#cd-chat-panel.active{
+  display:flex;
+}
+#cd-chat-head{
+  padding:16px 20px;
+  border-bottom:1px solid #141414;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+#cd-chat-head .av{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:#c9a87c;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#cd-chat-head .av svg{
+  width:18px;
+  height:18px;
+  stroke:#060606;
+  fill:none;
+  stroke-width:2;
+}
+#cd-chat-head .info h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;
+  font-weight:400;
+  color:#f2efe9;
+  margin:0;
+}
+#cd-chat-head .info span{
+  font-size:10px;
+  color:#5a544d;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+#cd-chat-head .dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#4ade80;
+  margin-left:auto;
+}
+#cd-chat-body{
+  flex:1;
+  overflow-y:auto;
+  padding:16px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  min-height:200px;
+  max-height:320px;
+}
+#cd-chat-body .msg{
+  max-width:85%;
+  padding:10px 14px;
+  font-size:13px;
+  line-height:1.6;
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+}
+#cd-chat-body .msg.bot{
+  align-self:flex-start;
+  background:rgba(201,168,124,.08);
+  border:1px solid rgba(201,168,124,.12);
+  border-radius:14px 14px 14px 4px;
+  color:#b8b0a4;
+}
+#cd-chat-body .msg.user{
+  align-self:flex-end;
+  background:#c9a87c;
+  border-radius:14px 14px 4px 14px;
+  color:#060606;
+}
+#cd-chat-body .typing{
+  align-self:flex-start;
+  display:flex;
+  gap:4px;
+  padding:10px 14px;
+}
+#cd-chat-body .typing i{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#c9a87c;
+  opacity:.4;
+  animation:b 1.4s infinite;
+}
+#cd-chat-body .typing i:nth-child(2){animation-delay:.2s}
+#cd-chat-body .typing i:nth-child(3){animation-delay:.4s}
+@keyframes b{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+#cd-chat-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  padding:0 20px 12px;
+}
+#cd-chat-chips button{
+  padding:6px 12px;
+  border:1px solid #141414;
+  border-radius:16px;
+  font-size:11px;
+  color:#5a544d;
+  background:transparent;
+  cursor:pointer;
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  transition:all .3s;
+}
+#cd-chat-chips button:hover{
+  border-color:#c9a87c;
+  color:#c9a87c;
+}
+#cd-chat-foot{
+  padding:12px 20px 16px;
+  border-top:1px solid #141414;
+  display:flex;
+  gap:8px;
+}
+#cd-chat-foot input{
+  flex:1;
+  background:transparent;
+  border:1px solid #141414;
+  border-radius:10px;
+  padding:10px 12px;
+  color:#f2efe9;
+  font-family:'Inter',sans-serif;
+  font-size:13px;
+  outline:none;
+}
+#cd-chat-foot input:focus{
+  border-color:rgba(201,168,124,.3);
+}
+#cd-chat-foot input::placeholder{
+  color:#5a544d;
+}
+#cd-chat-foot button{
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  background:#c9a87c;
+  border:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#cd-chat-foot button svg{
+  width:16px;
+  height:16px;
+  stroke:#060606;
+  fill:none;
+  stroke-width:2;
+}
+@media(max-width:768px){
+  #cd-chat-panel{
+    width:calc(100vw - 48px);
+    right:24px;
+    max-height:60vh;
+  }
+}
+</style>
+
+<div id="cd-chat-btn" onclick="cdToggle()">
+  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</div>
+
+<div id="cd-chat-panel">
+  <div id="cd-chat-head">
+    <div class="av"><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v.5a.5.5 0 0 0 .5.5H18a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2.5a.5.5 0 0 0 .5-.5V5a3 3 0 0 1 3-3z"/><circle cx="12" cy="14" r="2"/></svg></div>
+    <div class="info"><h4>Deconstruct Guide</h4><span>AI Facilitator</span></div>
+    <div class="dot"></div>
+  </div>
+  <div id="cd-chat-body">
+    <div class="msg bot">Welcome. I'm here to help you explore Classroom Deconstruct. What brings you here?</div>
+  </div>
+  <div id="cd-chat-chips">
+    <button onclick="cdChip('What is Classroom Deconstruct?')">What is CD?</button>
+    <button onclick="cdChip('Tell me about the pillars')">The Pillars</button>
+    <button onclick="cdChip('How do I apply?')">How to Apply</button>
+    <button onclick="cdChip('What does a facilitator do?')">Facilitator Role</button>
+  </div>
+  <div id="cd-chat-foot">
+    <input type="text" id="cd-chat-in" placeholder="Type your question..." onkeydown="if(event.key==='Enter')cdSend()">
+    <button onclick="cdSend()"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+  </div>
+</div>
+
+<script>
+var cdBody=document.getElementById('cd-chat-body');
+var cdIn=document.getElementById('cd-chat-in');
+var cdPanel=document.getElementById('cd-chat-panel');
+
+function cdToggle(){
+  cdPanel.classList.toggle('active');
+  if(cdPanel.classList.contains('active')){
+    setTimeout(function(){cdIn.focus();},100);
+  }
+}
+
+function cdAdd(text,isUser){
+  var d=document.createElement('div');
+  d.className='msg '+(isUser?'user':'bot');
+  d.innerHTML=text;
+  cdBody.appendChild(d);
+  cdBody.scrollTop=cdBody.scrollHeight;
+}
+
+function cdTyping(){
+  var d=document.createElement('div');
+  d.className='typing';
+  d.id='cd-typing';
+  d.innerHTML='<i></i><i></i><i></i>';
+  cdBody.appendChild(d);
+  cdBody.scrollTop=cdBody.scrollHeight;
+}
+
+function cdRemoveTyping(){
+  var t=document.getElementById('cd-typing');
+  if(t)t.remove();
+}
+
+function cdReply(q){
+  var q2=q.toLowerCase();
+  if(q2.indexOf('what is classroom deconstruct')>-1||q2.indexOf('what is cd')>-1){
+    return "Classroom Deconstruct is a 10-week facilitator training focused on inner transformation. Through five pillars — LEAD, STAY, RISE, BURN, HOLD — you learn to hold space for others while doing your own deep work.";
+  }
+  if(q2.indexOf('pillar')>-1){
+    return "The Five Pillars are:<br><br><b>LEAD</b> — Listen, Engage, Awaken, Discern<br><b>STAY</b> — Settle, Track, Allow, Yield<br><b>RISE</b> — Root, Inspire, Serve, Embody<br><b>BURN</b> — Break, Unmask, Reveal, Nourish<br><b>HOLD</b> — Hear, Offer, Lean, Deepen<br><br>These aren't steps — they're invitations to different kinds of honesty.";
+  }
+  if(q2.indexOf('lead')>-1){
+    return "LEAD is about the journey inward before leading others. You'll learn stillness, self-awareness, and how to choose from clarity rather than default patterns.";
+  }
+  if(q2.indexOf('stay')>-1){
+    return "STAY is the art of presence under pressure — remaining with discomfort and emotion instead of escaping. We settle not to escape reality, but to meet it from the ground.";
+  }
+  if(q2.indexOf('rise')>-1){
+    return "RISE is about reclaiming authenticity, vision, and purpose. Not about climbing higher, but aligning deeper — with your values, your fire, and your service.";
+  }
+  if(q2.indexOf('burn')>-1){
+    return "BURN is about dismantling what no longer serves — breaking false structures, unmasking roles, revealing what's raw, and nourishing what remains. Breakage isn't failure; it's the beginning of something real.";
+  }
+  if(q2.indexOf('hold')>-1){
+    return "HOLD is where the work becomes real — learning to truly listen, offer space without rescuing, and deepen for integrity, not intensity. To hold is to remain.";
+  }
+  if(q2.indexOf('apply')>-1||q2.indexOf('join')>-1||q2.indexOf('start')>-1){
+    return "Click the 'Apply to Join' button in the invitation section. The 10-week program includes live sessions, peer practice, somatic work, and a final practicum. No prior experience required — only willingness to do your own inner work.";
+  }
+  if(q2.indexOf('facilitator')>-1||q2.indexOf('role')>-1){
+    return "A CD Facilitator is not a teacher or authority. You are a space holder who models presence over perfection. You listen more than you speak, trust the group's wisdom, and embody what you teach.";
+  }
+  if(q2.indexOf('certif')>-1){
+    return "Certification requires completing all modules, weekly reflections, a 60-90 minute final practicum (passing score 22+/30), peer feedback, and a final reflection. It's about embodiment, not performance.";
+  }
+  if(q2.indexOf('training')>-1||q2.indexOf('week')>-1||q2.indexOf('program')>-1){
+    return "The 10-week training has three phases:<br><br><b>Weeks 1-2:</b> Foundation — philosophy, safety, trauma sensitivity.<br><b>Weeks 3-7:</b> Pillar Embodiment — deep work through all five pillars.<br><b>Weeks 8-10:</b> Mastery & Integration — practicum, assessment, certification.";
+  }
+  if(q2.indexOf('cost')>-1||q2.indexOf('price')>-1||q2.indexOf('pay')>-1||q2.indexOf('fee')>-1||q2.indexOf('money')>-1){
+    return "Pricing is shared during the application review. We offer payment plans to make this work accessible. Apply and we'll discuss everything on a discovery call.";
+  }
+  if(q2.indexOf('unlearn')>-1){
+    return "Unlearning is letting go of what was never truly yours — inherited beliefs, performed roles, survival patterns that once protected you but now constrain you.";
+  }
+  if(q2.indexOf('unmask')>-1){
+    return "Unmasking is removing the false roles you've worn to survive. The mask didn't protect you — it protected your image. Beneath it, you are still here.";
+  }
+  if(q2.indexOf('transform')>-1){
+    return "Transformation in CD isn't about becoming someone else. It's about returning to who you've always been — stripping away false layers to reveal the authentic individual within.";
+  }
+  if(q2.indexOf('hello')>-1||q2.indexOf('hi')>-1){
+    return "Hello. I'm here to guide you through Classroom Deconstruct. What would you like to explore?";
+  }
+  if(q2.indexOf('help')>-1){
+    return "I can answer questions about:<br>• What CD is<br>• The Five Pillars<br>• The training structure<br>• How to apply<br>• The facilitator role<br>• Certification<br><br>What would you like to know?";
+  }
+  return "I don't have a specific answer for that yet. Could you rephrase, or ask about the pillars, training, application process, or facilitator role?";
+}
+
+function cdSend(){
+  var text=cdIn.value.trim();
+  if(!text)return;
+  cdAdd(text,true);
+  cdIn.value='';
+  cdTyping();
+  setTimeout(function(){
+    cdRemoveTyping();
+    cdAdd(cdReply(text),false);
+  },1000);
+}
+
+function cdChip(text){
+  cdAdd(text,true);
+  cdTyping();
+  setTimeout(function(){
+    cdRemoveTyping();
+    cdAdd(cdReply(text),false);
+  },1000);
+}
+</script>
+
+</body>
 </html>
