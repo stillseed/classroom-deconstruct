@@ -57,6 +57,60 @@ html.lenis, html.lenis body{height:auto}
 }
 .cursor.hover{width:48px;height:48px;background:transparent;border:1px solid var(--accent);mix-blend-mode:normal}
 
+/* MOBILE MENU */
+.menu-toggle{
+  display:none;
+  flex-direction:column;
+  gap:6px;
+  background:none;
+  border:none;
+  padding:8px;
+  z-index:101;
+  cursor:none;
+}
+.menu-toggle span{
+  display:block;
+  width:22px;height:1px;
+  background:var(--text);
+  transition:all .4s cubic-bezier(.23,1,.32,1);
+  transform-origin:center;
+}
+.menu-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-toggle.active span:nth-child(2){opacity:0}
+.menu-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+.mobile-menu{
+  position:fixed;inset:0;
+  background:var(--bg);
+  z-index:99;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:2.5rem;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .6s ease,visibility .6s ease;
+}
+.mobile-menu.open{opacity:1;visibility:visible}
+.mobile-menu a{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.2rem;
+  font-weight:300;
+  color:var(--text);
+  text-decoration:none;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .5s ease,transform .5s cubic-bezier(.23,1,.32,1),color .3s;
+}
+.mobile-menu.open a{opacity:1;transform:translateY(0)}
+.mobile-menu.open a:nth-child(1){transition-delay:.1s}
+.mobile-menu.open a:nth-child(2){transition-delay:.18s}
+.mobile-menu.open a:nth-child(3){transition-delay:.26s}
+.mobile-menu.open a:nth-child(4){transition-delay:.34s}
+.mobile-menu.open a:nth-child(5){transition-delay:.42s}
+.mobile-menu a:hover{color:var(--accent)}
+
 /* LOADER */
 .loader{
   position:fixed;inset:0;
@@ -73,8 +127,8 @@ html.lenis, html.lenis body{height:auto}
   width:140px;
   opacity:0;
   animation:loaderIn 1.5s cubic-bezier(.23,1,.32,1) .3s forwards;
+  
 }
-@keyframes loaderIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .loader-bar{
   width:0;height:1px;
   background:var(--accent);
@@ -90,6 +144,7 @@ html.lenis, html.lenis body{height:auto}
   opacity:0;
   animation:fadeIn 1s ease 2s forwards;
 }
+@keyframes loaderIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes loaderBar{to{width:100px}}
 @keyframes fadeIn{to{opacity:1}}
 
@@ -119,7 +174,7 @@ html.lenis, html.lenis body{height:auto}
   gap:1rem;
   text-decoration:none;
 }
-.nav-brand img{height:44px;width:auto;opacity:.9}
+.nav-brand img{height:48px;width:auto;opacity:.9}
 .nav-brand span{
   font-family:'Cormorant Garamond',serif;
   font-size:1.3rem;
@@ -175,11 +230,12 @@ html.lenis, html.lenis body{height:auto}
   position:relative;
   z-index:2;
   text-align:center;
-  margin-bottom:3rem;
+  margin-bottom:4rem;
 }
 .hero-logo{
   width:280px;
   opacity:0;
+  
   animation:heroLogoIn 2s cubic-bezier(.23,1,.32,1) 2.5s forwards;
 }
 @keyframes heroLogoIn{
@@ -188,9 +244,9 @@ html.lenis, html.lenis body{height:auto}
 }
 .hero h1{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(3.5rem,9vw,8rem);
+  font-size:clamp(3rem,8vw,7rem);
   font-weight:300;
-  line-height:1.1;
+  line-height:1.15;
   text-align:center;
   letter-spacing:-2px;
   position:relative;
@@ -276,7 +332,9 @@ html.lenis, html.lenis body{height:auto}
   gap:8rem;
   align-items:center;
 }
-.phil-left{position:relative}
+.phil-left{
+  position:relative;
+}
 .phil-label{
   font-size:.65rem;
   letter-spacing:4px;
@@ -641,6 +699,7 @@ html.lenis, html.lenis body{height:auto}
   width:100px;
   margin-bottom:3rem;
   opacity:.5;
+  
 }
 .cta h2{
   font-family:'Cormorant Garamond',serif;
@@ -698,6 +757,7 @@ html.lenis, html.lenis body{height:auto}
 .footer-brand img{
   height:40px;width:auto;
   opacity:.6;
+  
 }
 .footer-brand span{
   font-family:'Cormorant Garamond',serif;
@@ -749,6 +809,7 @@ html.lenis, html.lenis body{height:auto}
 @media(max-width:768px){
   .nav{padding:1.5rem}
   .nav-links{display:none}
+  .menu-toggle{display:flex}
   .section{padding:6rem 1.5rem}
   .hero{padding:6rem 1.5rem}
   .hero-logo{width:200px}
@@ -769,18 +830,25 @@ html.lenis, html.lenis body{height:auto}
 
 <!-- LOADER -->
 <div class="loader" id="loader">
-  <div style="position:relative;display:inline-block">
-    <div style="position:absolute;inset:-30px;background:radial-gradient(circle,rgba(201,168,124,.2) 0%,transparent 70%);pointer-events:none"></div>
-    <img src="assets/logo.png" alt="" class="loader-logo" style="position:relative;z-index:2">
-  </div>
+  <img src="assets/logo.png" alt="" class="loader-logo">
   <div class="loader-bar"></div>
   <div class="loader-text">Loading Experience</div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#philosophy" onclick="closeMenu()">Philosophy</a>
+  <a href="#pillars" onclick="closeMenu()">Pillars</a>
+  <a href="#journey" onclick="closeMenu()">Journey</a>
+  <a href="#facilitator" onclick="closeMenu()">Facilitator</a>
+  <a href="#certification" onclick="closeMenu()">Certify</a>
 </div>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
   <a href="#" class="nav-brand">
-    <img src="assets/logo.png" alt="Classroom Deconstruct">
+    <img src="assets/logo-icon.png" alt="Classroom Deconstruct">
+    <span>Classroom <em>Deconstruct</em></span>
   </a>
   <ul class="nav-links">
     <li><a href="#philosophy">Philosophy</a></li>
@@ -789,16 +857,16 @@ html.lenis, html.lenis body{height:auto}
     <li><a href="#facilitator">Facilitator</a></li>
     <li><a href="#certification">Certify</a></li>
   </ul>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-orb"></div>
   <div class="hero-logo-wrap">
-    <div style="position:relative;display:inline-block">
-      <div style="position:absolute;inset:-40px;background:radial-gradient(circle,rgba(201,168,124,.15) 0%,transparent 70%);pointer-events:none"></div>
-      <img src="assets/logo.png" alt="Classroom Deconstruct" class="hero-logo" style="position:relative;z-index:2">
-    </div>
+    <img src="assets/logo.png" alt="Classroom Deconstruct" class="hero-logo">
   </div>
   <h1>Unlearn. <em>Unmask.</em> Transform.</h1>
   <p class="hero-tagline">Not from the outside in — from the inside out</p>
@@ -1071,10 +1139,7 @@ html.lenis, html.lenis body{height:auto}
 <!-- CTA -->
 <div class="cta" id="contact">
   <div class="cta-orb"></div>
-  <div style="position:relative;display:inline-block;margin-bottom:3rem">
-    <div style="position:absolute;inset:-20px;background:radial-gradient(circle,rgba(201,168,124,.1) 0%,transparent 70%);pointer-events:none"></div>
-    <img src="assets/logo.png" alt="" class="cta-logo" style="position:relative;z-index:2;opacity:.7">
-  </div>
+  <img src="assets/logo.png" alt="" class="cta-logo">
   <h2 class="reveal">The Invitation</h2>
   <p class="reveal d1">We don't promise transformation. We promise a safe and supportive space for you to confront your truth. And when that happens, transformation becomes inevitable.</p>
   <a href="#" class="cta-btn reveal d2">Apply to Join</a>
@@ -1083,7 +1148,7 @@ html.lenis, html.lenis body{height:auto}
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-brand">
-    <img src="assets/logo.png" alt="">
+    <img src="assets/logo-icon.png" alt="">
     <span>Classroom Deconstruct</span>
   </div>
   <div class="footer-tagline">Unlearn. Unmask. Transform.</div>
@@ -1137,13 +1202,39 @@ const obs=new IntersectionObserver((entries)=>{
 },{threshold:.1,rootMargin:'0px 0px -80px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
+// Mobile menu
+const menuToggle=document.getElementById('menuToggle');
+const mobileMenu=document.getElementById('mobileMenu');
+menuToggle.addEventListener('click',()=>{
+  menuToggle.classList.toggle('active');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':'';
+});
+function closeMenu(){
+  menuToggle.classList.remove('active');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow='';
+}
+
 // Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',function(e){
+    const href=this.getAttribute('href');
+    if(href==='#') return;
     e.preventDefault();
-    const t=document.querySelector(this.getAttribute('href'));
-    if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+    const t=document.querySelector(href);
+    if(t){
+      t.scrollIntoView({behavior:'smooth',block:'start'});
+      closeMenu();
+    }
   });
+});
+
+// Keyboard
+document.addEventListener('keydown',(e)=>{
+  if(e.key==='Escape'){
+    closeMenu();
+  }
 });
 </script>
 
