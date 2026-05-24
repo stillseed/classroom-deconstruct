@@ -3,36 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Classroom Deconstruct — Brochure</title>
+<title>Classroom Deconstruct — Program Brochure</title>
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#060606;
-  --bg-light:#0a0a0a;
+  --bg-light:#0c0c0c;
   --text:#f2efe9;
   --text-dim:#b8b0a4;
   --text-faint:#5a544d;
   --accent:#c9a87c;
-  --accent-glow:rgba(201,168,124,0.12);
   --border:#1a1a1a;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{
   font-family:'Inter',sans-serif;
   background:var(--bg);
   color:var(--text);
   font-weight:300;
-  line-height:1.65;
-  overflow-x:hidden;
+  line-height:1.6;
+  font-size:9.5pt;
 }
 
 ::selection{background:rgba(201,168,124,0.2);color:var(--text)}
 
-/* === COVER === */
+.page{
+  max-width:210mm;
+  margin:0 auto;
+  padding:14mm 18mm;
+  position:relative;
+  border-bottom:1px solid var(--border);
+}
+.page:last-child{border-bottom:none}
+
 .cover{
   min-height:100vh;
   display:flex;
@@ -40,635 +46,458 @@ body{
   justify-content:center;
   align-items:center;
   text-align:center;
-  padding:4rem;
-  position:relative;
-  overflow:hidden;
+  padding:20mm;
   border-bottom:1px solid var(--border);
 }
-.cover-orb{
-  position:absolute;
-  top:45%;left:50%;
-  transform:translate(-50%,-50%);
-  width:600px;height:600px;
-  background:radial-gradient(circle,var(--accent-glow) 0%,transparent 65%);
-  pointer-events:none;
-}
 .cover-logo{
-  width:220px;
-  margin-bottom:3rem;
+  width:160px;
+  margin-bottom:8mm;
   opacity:.9;
-  position:relative;
-  z-index:2;
 }
 .cover h1{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2.8rem,6vw,5rem);
+  font-size:32pt;
   font-weight:300;
   line-height:1.1;
-  letter-spacing:-2px;
-  position:relative;
-  z-index:2;
+  letter-spacing:-1px;
 }
 .cover h1 em{
   font-style:italic;
   color:var(--accent);
 }
-.cover-tagline{
-  margin-top:1.5rem;
-  font-size:.8rem;
-  letter-spacing:5px;
-  text-transform:uppercase;
-  color:var(--text-faint);
-  position:relative;
-  z-index:2;
-}
-.cover-line{
-  width:60px;height:1px;
-  background:var(--accent);
-  margin:2.5rem auto;
-  opacity:.5;
-  position:relative;
-  z-index:2;
-}
-.cover-desc{
-  max-width:520px;
-  font-size:1.05rem;
-  color:var(--text-dim);
-  line-height:1.9;
-  position:relative;
-  z-index:2;
-}
-
-/* === SECTIONS === */
-.section{
-  padding:5rem 4rem;
-  max-width:1100px;
-  margin:0 auto;
-}
-.section-alt{background:var(--bg-light);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-
-.section-header{
-  text-align:center;
-  margin-bottom:3.5rem;
-}
-.label{
-  font-size:.65rem;
+.cover-sub{
+  font-size:9pt;
   letter-spacing:4px;
   text-transform:uppercase;
   color:var(--text-faint);
-  display:block;
-  margin-bottom:1rem;
+  margin-top:4mm;
 }
-.label-left{
-  text-align:left;
-  display:flex;
-  align-items:center;
-  gap:1rem;
-  margin-bottom:1.5rem;
+.cover-line{
+  width:40px;
+  height:1px;
+  background:var(--accent);
+  margin:8mm auto;
+  opacity:.5;
 }
-.label-left::before{
-  content:'';width:30px;height:1px;background:var(--accent);
+.cover-desc{
+  max-width:110mm;
+  font-size:10pt;
+  color:var(--text-dim);
+  line-height:1.8;
+}
+.cover-meta{
+  margin-top:12mm;
+  font-size:8pt;
+  color:var(--text-faint);
+  letter-spacing:2px;
+  text-transform:uppercase;
 }
 
 h2{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2rem,4vw,3.2rem);
+  font-size:18pt;
   font-weight:300;
-  line-height:1.15;
-  letter-spacing:-1px;
+  line-height:1.2;
+  letter-spacing:-.5px;
+  margin-bottom:5mm;
 }
 h3{
   font-family:'Cormorant Garamond',serif;
-  font-size:1.6rem;
+  font-size:13pt;
   font-weight:400;
   color:var(--accent);
-  margin-bottom:.75rem;
+  margin-bottom:2mm;
+  letter-spacing:.5px;
 }
-
-p{
-  font-size:.95rem;
-  color:var(--text-dim);
-  line-height:1.9;
-}
-
-/* === PHILOSOPHY === */
-.phil-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:4rem;
-  align-items:start;
-}
-.phil-left h2{margin-bottom:1.5rem}
-.phil-right{
-  display:flex;
-  flex-direction:column;
-  gap:1.5rem;
-}
-.phil-card{
-  padding:2rem;
-  border:1px solid var(--border);
-  position:relative;
-  overflow:hidden;
-}
-.phil-card::before{
-  content:'';position:absolute;
-  top:0;left:0;width:100%;height:2px;
-  background:var(--accent);
-  transform:scaleX(0);
-  transform-origin:left;
-  transition:transform .6s cubic-bezier(.23,1,.32,1);
-}
-.phil-card:hover::before{transform:scaleX(1)}
-.phil-card:hover{
-  border-color:rgba(201,168,124,.2);
-  transform:translateY(-3px);
-  transition:all .6s cubic-bezier(.23,1,.32,1);
-}
-.phil-num{
-  font-family:'Cormorant Garamond',serif;
-  font-size:3rem;
-  font-weight:300;
-  color:var(--accent);
-  opacity:.12;
-  line-height:1;
-  margin-bottom:.5rem;
-}
-.phil-card p{
-  font-size:.9rem;
-  line-height:1.8;
-}
-
-/* === PILLARS === */
-.pillars-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:0;
-  border:1px solid var(--border);
-}
-.pillar-box{
-  padding:2rem 1.5rem;
-  border-right:1px solid var(--border);
-  text-align:center;
-  transition:all .5s ease;
-}
-.pillar-box:last-child{border-right:none}
-.pillar-box:hover{
-  background:rgba(201,168,124,.03);
-}
-.pillar-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.4rem;
-  font-weight:400;
-  color:var(--accent);
-  letter-spacing:3px;
-  margin-bottom:1rem;
-}
-.pillar-words{
-  font-size:.7rem;
+h4{
+  font-size:8pt;
   letter-spacing:2px;
   text-transform:uppercase;
   color:var(--text-faint);
-  line-height:2;
-}
-
-.pillar-details{
-  margin-top:3rem;
-  display:flex;
-  flex-direction:column;
-  gap:2rem;
-}
-.pillar-row{
-  display:grid;
-  grid-template-columns:120px 1fr;
-  gap:2rem;
-  align-items:start;
-  padding:2rem 0;
-  border-bottom:1px solid var(--border);
-}
-.pillar-row:last-child{border-bottom:none}
-.pillar-row-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.3rem;
+  margin-bottom:3mm;
   font-weight:400;
-  color:var(--accent);
-  letter-spacing:3px;
-  padding-top:.2rem;
 }
-.pillar-row-desc{
-  font-size:.9rem;
+p{
+  font-size:9.5pt;
   color:var(--text-dim);
-  line-height:1.9;
-}
-.pillar-row-desc strong{
-  color:var(--text);
-  font-weight:400;
-  font-size:1rem;
+  line-height:1.7;
+  margin-bottom:3mm;
 }
 
-/* === JOURNEY === */
-.journey-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:2rem;
-}
-.journey-card{
-  padding:2.5rem;
-  border:1px solid var(--border);
-  position:relative;
-  overflow:hidden;
-  transition:all .6s ease;
-}
-.journey-card::before{
-  content:'';position:absolute;
-  top:0;left:0;width:100%;height:2px;
-  background:var(--accent);
-  transform:scaleX(0);
-  transform-origin:left;
-  transition:transform .6s cubic-bezier(.23,1,.32,1);
-}
-.journey-card:hover::before{transform:scaleX(1)}
-.journey-card:hover{
-  border-color:rgba(201,168,124,.2);
-  transform:translateY(-4px);
-}
-.journey-num{
-  position:absolute;
-  top:1rem;right:1.2rem;
-  font-family:'Cormorant Garamond',serif;
-  font-size:4rem;
-  font-weight:300;
-  color:var(--accent);
-  opacity:.06;
-  line-height:1;
-}
-.journey-week{
-  font-size:.65rem;
+.label{
+  font-size:7.5pt;
   letter-spacing:3px;
   text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:1rem;
-}
-.journey-card h3{
-  font-size:1.5rem;
-  margin-bottom:.75rem;
-  color:var(--text);
-}
-.journey-card p{
-  font-size:.85rem;
-  line-height:1.8;
+  color:var(--text-faint);
+  display:block;
+  margin-bottom:3mm;
 }
 
-/* === ROLE === */
-.role-section{
+.cols-2{
   display:grid;
-  grid-template-columns:1.2fr 1fr;
-  gap:4rem;
-  align-items:center;
+  grid-template-columns:1fr 1fr;
+  gap:8mm;
 }
-.role-quote{
+.cols-3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6mm;
+}
+
+.card{
+  border:1px solid var(--border);
+  padding:5mm;
+}
+.card-accent{
+  border-top:2px solid var(--accent);
+}
+.card-num{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(1.6rem,3vw,2.4rem);
+  font-size:20pt;
   font-weight:300;
-  line-height:1.4;
-  font-style:italic;
-  position:relative;
-  padding-left:1.5rem;
-  color:var(--text-dim);
+  color:var(--accent);
+  opacity:.15;
+  line-height:1;
+  margin-bottom:2mm;
 }
-.role-quote::before{
-  content:'';position:absolute;
-  left:0;top:.4rem;bottom:.4rem;
-  width:2px;background:var(--accent);
-  opacity:.4;
+
+.pillar-strip{
+  border:1px solid var(--border);
+  margin-bottom:4mm;
 }
-.role-quote span{color:var(--accent)}
-.role-list{list-style:none}
-.role-list li{
-  padding:1rem 0;
+.pillar-header{
+  display:grid;
+  grid-template-columns:25mm 1fr auto;
+  gap:4mm;
+  align-items:center;
+  padding:4mm 5mm;
   border-bottom:1px solid var(--border);
-  font-size:.9rem;
+}
+.pillar-header:last-child{border-bottom:none}
+.pillar-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:12pt;
+  font-weight:400;
+  color:var(--accent);
+  letter-spacing:2px;
+}
+.pillar-words{
+  font-size:8pt;
+  color:var(--text-faint);
+  letter-spacing:1px;
+}
+.pillar-desc{
+  padding:4mm 5mm;
+  font-size:9pt;
+  color:var(--text-dim);
+  line-height:1.7;
+  border-bottom:1px solid var(--border);
+}
+.pillar-desc:last-child{border-bottom:none}
+.pillar-desc strong{
+  color:var(--text);
+  font-weight:400;
+}
+
+.quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:14pt;
+  font-weight:300;
+  font-style:italic;
+  line-height:1.5;
+  color:var(--text-dim);
+  padding-left:4mm;
+  border-left:2px solid var(--accent);
+  margin:5mm 0;
+}
+.quote span{color:var(--accent)}
+
+.brochure-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.brochure-list li{
+  padding:2.5mm 0;
+  border-bottom:1px solid var(--border);
+  font-size:9pt;
   color:var(--text-dim);
   display:flex;
   align-items:center;
-  gap:1rem;
+  gap:3mm;
 }
-.role-list li::before{
-  content:'';width:5px;height:5px;
-  border-radius:50%;background:var(--accent);
-  opacity:.4;
+.brochure-list li::before{
+  content:'';
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:var(--accent);
+  opacity:.5;
   flex-shrink:0;
 }
-.role-list li:last-child{border-bottom:none}
+.brochure-list li:last-child{border-bottom:none}
 
-/* === CERT === */
-.cert-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:0;
-  border:1px solid var(--border);
+.brochure-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:4mm;
 }
-.cert-card{
-  padding:2.5rem;
-  border-right:1px solid var(--border);
+.brochure-table th,
+.brochure-table td{
+  padding:3mm 4mm;
+  text-align:left;
   border-bottom:1px solid var(--border);
-  position:relative;
-  overflow:hidden;
-  transition:all .5s ease;
+  font-size:9pt;
 }
-.cert-card:nth-child(3n){border-right:none}
-.cert-card:nth-last-child(-n+3){border-bottom:none}
-.cert-card:hover{
-  background:rgba(201,168,124,.03);
-}
-.cert-num{
-  font-family:'Cormorant Garamond',serif;
-  font-size:2.5rem;
-  font-weight:300;
-  color:var(--accent);
-  opacity:.1;
-  line-height:1;
-  margin-bottom:.75rem;
-}
-.cert-card h4{
-  font-size:1rem;
+.brochure-table th{
+  font-size:7.5pt;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--text-faint);
   font-weight:400;
-  margin-bottom:.5rem;
-  color:var(--text);
-}
-.cert-card p{
-  font-size:.82rem;
-  line-height:1.8;
-}
-
-/* === CTA === */
-.cta{
-  text-align:center;
-  padding:6rem 4rem;
-  position:relative;
-  overflow:hidden;
   border-top:1px solid var(--border);
 }
-.cta-orb{
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:400px;height:400px;
-  background:radial-gradient(circle,var(--accent-glow) 0%,transparent 60%);
-  pointer-events:none;
+.brochure-table td{color:var(--text-dim)}
+.brochure-table td strong{
+  color:var(--text);
+  font-weight:400;
 }
-.cta-logo{
-  width:80px;
-  margin-bottom:2rem;
-  opacity:.5;
-  position:relative;
-  z-index:2;
+
+.details-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5mm;
+  margin-top:5mm;
 }
-.cta h2{
-  margin-bottom:1rem;
-  position:relative;
-  z-index:2;
+.detail-box{
+  border:1px solid var(--border);
+  padding:4mm 5mm;
 }
-.cta p{
-  max-width:480px;
-  margin:0 auto 2rem;
-  position:relative;
-  z-index:2;
-}
-.cta-btn{
-  display:inline-block;
-  padding:1rem 2.5rem;
-  border:1px solid var(--accent);
+.detail-box h4{
+  margin-bottom:2mm;
   color:var(--accent);
-  text-decoration:none;
-  font-size:.75rem;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  transition:all .5s cubic-bezier(.23,1,.32,1);
-  position:relative;
-  z-index:2;
-  background:transparent;
+  font-size:7.5pt;
 }
-.cta-btn:hover{
-  background:var(--accent);
-  color:var(--bg);
+.detail-box p{
+  font-size:9pt;
+  margin:0;
+  line-height:1.6;
 }
 
-/* === FOOTER === */
-.footer{
+.footer-bar{
+  margin-top:8mm;
+  padding-top:4mm;
   border-top:1px solid var(--border);
-  padding:3rem 4rem 2rem;
-  text-align:center;
-}
-.footer-brand{
   display:flex;
+  justify-content:space-between;
   align-items:center;
-  justify-content:center;
-  gap:.75rem;
-  margin-bottom:.75rem;
-}
-.footer-brand img{height:32px;width:auto;opacity:.6}
-.footer-brand span{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.2rem;
-  color:var(--text);
-}
-.footer-tagline{
-  font-size:.75rem;
+  font-size:7.5pt;
   color:var(--text-faint);
-  letter-spacing:4px;
-  text-transform:uppercase;
-  margin-bottom:1.5rem;
+  letter-spacing:1px;
 }
-.footer-copy{
-  font-size:.75rem;
-  color:var(--text-faint);
-  padding-top:1.5rem;
-  border-top:1px solid var(--border);
-  max-width:500px;
-  margin:0 auto;
-}
+.footer-bar img{height:24px;opacity:.5}
 
-/* === PRINT === */
 @media print{
   body{background:#fff;color:#111}
-  .cover{min-height:auto;padding:3rem 2rem;border-bottom:2px solid #c9a87c}
-  .cover-orb{display:none}
-  .section{padding:2rem}
-  .section-alt{background:#fafafa}
-  .pillar-box,.cert-card,.journey-card,.phil-card{border:1px solid #ddd}
-  .cta-orb{display:none}
+  .page{border-bottom:1px solid #ddd;padding:12mm 15mm}
+  .cover{border-bottom:2px solid #c9a87c;min-height:auto}
+  .card,.pillar-strip,.detail-box{border:1px solid #ccc}
+  .card-accent{border-top:2px solid #c9a87c}
+  .quote{border-left:2px solid #c9a87c}
+  .brochure-list li::before{background:#c9a87c}
+  .brochure-table th,.brochure-table td{border-color:#ddd}
+  .brochure-table th{border-top:1px solid #ddd}
+  .footer-bar{border-color:#ddd}
   a{text-decoration:none;color:#111}
-  .cta-btn{border:2px solid #c9a87c}
 }
 
-/* === RESPONSIVE === */
-@media(max-width:900px){
-  .phil-grid,.role-section{grid-template-columns:1fr}
-  .pillars-grid{grid-template-columns:1fr;border:none}
-  .pillar-box{border:1px solid var(--border);border-bottom:none}
-  .pillar-box:last-child{border-bottom:1px solid var(--border)}
-  .pillar-box{border-right:1px solid var(--border)}
-  .journey-grid,.cert-grid{grid-template-columns:1fr}
-  .cert-card{border-right:1px solid var(--border)!important;border-bottom:1px solid var(--border)}
-  .cert-card:last-child{border-bottom:none}
-  .pillar-row{grid-template-columns:1fr;gap:1rem}
-}
-@media(max-width:600px){
-  .section{padding:3rem 1.5rem}
-  .cover{padding:3rem 1.5rem}
-  .cta{padding:4rem 1.5rem}
-  .footer{padding:2rem 1.5rem}
+@media(max-width:700px){
+  .cols-2,.cols-3,.details-grid{grid-template-columns:1fr}
+  .pillar-header{grid-template-columns:1fr}
+  .page{padding:8mm}
+  .cover{padding:12mm}
 }
 </style>
-<base target="_blank">
 </head>
 <body>
 
-<!-- COVER -->
-<section class="cover">
-  <div class="cover-orb"></div>
+<!-- ==================== COVER ==================== -->
+<div class="cover">
   <img src="logo.png" alt="Classroom Deconstruct" class="cover-logo">
   <h1>Unlearn. <em>Unmask.</em> Transform.</h1>
-  <p class="cover-tagline">Not from the outside in — from the inside out</p>
+  <p class="cover-sub">Not from the outside in — from the inside out</p>
   <div class="cover-line"></div>
-  <p class="cover-desc">A deliberate slowdown — not to promote passivity, but to foster a deeper connection with our authentic selves. Classroom Deconstruct disrupts ingrained patterns and reminds us of the importance of being real.</p>
-</section>
+  <p class="cover-desc">A 10-week in-person facilitator training for individuals ready to lead with presence, truth, and depth. Not about teaching — about holding space, embodying truth, and facilitating transformation from the inside out.</p>
+  <p class="cover-meta">Program Brochure &middot; 2026</p>
+</div>
 
-<!-- PHILOSOPHY -->
-<section class="section" id="philosophy">
-  <div class="phil-grid">
-    <div class="phil-left">
-      <div class="label-left">The Foundation</div>
-      <h2>What is Classroom<br>Deconstruct?</h2>
-      <p style="margin-top:1.5rem">Not a course. Not a method. A space where the performance ends, and your real self begins to speak. We don't promise transformation. We promise a safe and supportive space for you to confront your truth.</p>
+<!-- ==================== PHILOSOPHY ==================== -->
+<div class="page">
+  <span class="label">The Foundation</span>
+  <h2>What is Classroom Deconstruct?</h2>
+  <p>A deliberate slowdown — not to promote passivity, but to foster a deeper connection with our authentic selves. It disrupts ingrained patterns and reminds us of the importance of being real.</p>
+  <p style="margin-bottom:6mm">Not a course. Not a method. A space where the performance ends, and your real self begins to speak. We don't promise transformation. We promise a safe and supportive space for you to confront your truth.</p>
+
+  <div class="cols-3">
+    <div class="card card-accent">
+      <div class="card-num">01</div>
+      <h3>Unlearn</h3>
+      <p>Let go of what was never truly yours. The inherited beliefs, the performed roles, the survival patterns that once protected you but now constrain you.</p>
     </div>
-    <div class="phil-right">
-      <div class="phil-card">
-        <div class="phil-num">01</div>
-        <h3>Unlearn</h3>
-        <p>Let go of what was never truly yours. The inherited beliefs, the performed roles, the survival patterns that once protected you but now constrain you.</p>
-      </div>
-      <div class="phil-card">
-        <div class="phil-num">02</div>
-        <h3>Unmask</h3>
-        <p>Remove the false roles and reveal the raw self. The mask didn't protect you — it protected your image. Beneath it, you are still here.</p>
-      </div>
-      <div class="phil-card">
-        <div class="phil-num">03</div>
-        <h3>Transform</h3>
-        <p>Not by becoming someone else, but by returning to who you've always been. Stripping away false layers to reveal the authentic individual within.</p>
-      </div>
+    <div class="card card-accent">
+      <div class="card-num">02</div>
+      <h3>Unmask</h3>
+      <p>Remove the false roles and reveal the raw self. The mask didn't protect you — it protected your image. Beneath it, you are still here.</p>
+    </div>
+    <div class="card card-accent">
+      <div class="card-num">03</div>
+      <h3>Transform</h3>
+      <p>Not by becoming someone else, but by returning to who you've always been. Stripping away false layers to reveal the authentic individual within.</p>
     </div>
   </div>
-</section>
+</div>
 
-<!-- PILLARS -->
-<section class="section section-alt" id="pillars">
-  <div class="section-header">
-    <span class="label">The Architecture</span>
-    <h2>The Five Pillars</h2>
-    <p style="max-width:520px;margin:1rem auto 0">These aren't steps to be followed, but invitations to embrace different kinds of honesty. You don't move through them once — you cycle through them your entire life.</p>
-  </div>
+<!-- ==================== PILLARS ==================== -->
+<div class="page">
+  <span class="label">The Architecture</span>
+  <h2>The Five Pillars</h2>
+  <p style="margin-bottom:6mm">These aren't steps to be followed, but invitations to embrace different kinds of honesty. You don't move through them once — you cycle through them your entire life.</p>
 
-  <div class="pillars-grid">
-    <div class="pillar-box">
+  <div class="pillar-strip">
+    <div class="pillar-header">
       <div class="pillar-name">LEAD</div>
-      <div class="pillar-words">Listen<br>Engage<br>Awaken<br>Discern</div>
+      <div class="pillar-words">Listen &middot; Engage &middot; Awaken &middot; Discern</div>
     </div>
-    <div class="pillar-box">
+    <div class="pillar-desc">
+      <strong>The journey inward, before leading others.</strong> LEAD begins with stillness. Not taking charge — but learning to listen. You'll awaken to what's been running you, and start choosing differently, from clarity rather than default.
+    </div>
+  </div>
+
+  <div class="pillar-strip">
+    <div class="pillar-header">
       <div class="pillar-name">STAY</div>
-      <div class="pillar-words">Settle<br>Track<br>Allow<br>Yield</div>
+      <div class="pillar-words">Settle &middot; Track &middot; Allow &middot; Yield</div>
     </div>
-    <div class="pillar-box">
+    <div class="pillar-desc">
+      <strong>The art of presence under pressure.</strong> STAY teaches you to remain. With discomfort. With emotion. With the truth that just surfaced. Most of us escape the moment we feel something — this pillar trains us to stay.
+    </div>
+  </div>
+
+  <div class="pillar-strip">
+    <div class="pillar-header">
       <div class="pillar-name">RISE</div>
-      <div class="pillar-words">Root<br>Inspire<br>Serve<br>Embody</div>
+      <div class="pillar-words">Root &middot; Inspire &middot; Serve &middot; Embody</div>
     </div>
-    <div class="pillar-box">
+    <div class="pillar-desc">
+      <strong>Reclaiming authenticity, vision, and purpose.</strong> RISE isn't about climbing. It's about alignment — with your values, your fire, your service, and your embodiment. This is where vision meets action.
+    </div>
+  </div>
+
+  <div class="pillar-strip">
+    <div class="pillar-header">
       <div class="pillar-name">BURN</div>
-      <div class="pillar-words">Break<br>Unmask<br>Reveal<br>Nourish</div>
+      <div class="pillar-words">Break &middot; Unmask &middot; Reveal &middot; Nourish</div>
     </div>
-    <div class="pillar-box">
+    <div class="pillar-desc">
+      <strong>Dismantling what no longer serves.</strong> BURN is about disruption. You'll break what's no longer true, unmask the roles you've played, reveal something raw — then nourish what remains. This isn't collapse. It's transformation.
+    </div>
+  </div>
+
+  <div class="pillar-strip">
+    <div class="pillar-header">
       <div class="pillar-name">HOLD</div>
-      <div class="pillar-words">Hear<br>Offer<br>Lean<br>Deepen</div>
+      <div class="pillar-words">Hear &middot; Offer &middot; Lean &middot; Deepen</div>
+    </div>
+    <div class="pillar-desc">
+      <strong>Becoming a safe space for others to heal and transform.</strong> HOLD is where the work becomes real. You'll learn to truly listen, to offer space without rescuing, to lean when you're tired, and to deepen — not for intensity, but for integrity.
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JOURNEY ==================== -->
+<div class="page">
+  <span class="label">The Path</span>
+  <h2>10-Week Facilitator Training</h2>
+  <p style="margin-bottom:6mm">A 10-week immersive training for individuals ready to lead with presence, truth, and depth. Not about teaching — about holding space, embodying truth, and facilitating transformation from the inside out.</p>
+
+  <table class="brochure-table">
+    <thead>
+      <tr>
+        <th>Phase</th>
+        <th>Weeks</th>
+        <th>Focus</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Foundation</strong></td>
+        <td>01 — 02</td>
+        <td>Establishing the container. Understanding the philosophy, intention, and origins of Classroom Deconstruct. Building psychological safety, trauma sensitivity, and presence.</td>
+      </tr>
+      <tr>
+        <td><strong>Pillar Embodiment</strong></td>
+        <td>03 — 07</td>
+        <td>Deep experiential immersion into each of the five pillars. Each week includes live sessions, peer-led practice, somatic awareness, and journaling integration.</td>
+      </tr>
+      <tr>
+        <td><strong>Mastery & Integration</strong></td>
+        <td>08 — 10</td>
+        <td>Culminating in the final practicum — leading a 60-90 minute session with a real group, observed live and assessed using the CD Rubric. Closing with integration and certification.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== PROGRAM AT A GLANCE ==================== -->
+<div class="page">
+  <span class="label">The Practical</span>
+  <h2>Program at a Glance</h2>
+  <p style="margin-bottom:5mm">Everything you need to know before applying. Small cohorts. Real rooms. Real presence.</p>
+
+  <div class="details-grid">
+    <div class="detail-box">
+      <h4>Who This Is For</h4>
+      <p>Coaches, therapists, educators, team leaders, and anyone called to hold transformative space for others. No prior certification required — only readiness to show up fully.</p>
+    </div>
+    <div class="detail-box">
+      <h4>Format</h4>
+      <p>In-person sessions held in a dedicated training space. Somatic exercises, live facilitation practice, peer-led circles, and guided journaling — all in the same room, breathing the same air.</p>
+    </div>
+    <div class="detail-box">
+      <h4>Time Commitment</h4>
+      <p>One 3-hour in-person session per week, plus a 60-minute peer practice circle between sessions. Journaling and reflection work is done offline, in your own time.</p>
+    </div>
+    <div class="detail-box">
+      <h4>Cohort Size</h4>
+      <p>Intimate groups of 12–16 participants. We cap enrollment to preserve psychological safety and ensure every voice is witnessed in the room.</p>
+    </div>
+    <div class="detail-box">
+      <h4>Start Dates</h4>
+      <p>Cohorts launch quarterly: January, April, July, and October. Application opens 6 weeks prior to each intake. Location announced upon acceptance.</p>
+    </div>
+    <div class="detail-box">
+      <h4>Investment</h4>
+      <p>Full program tuition and payment plan options provided upon application review. A limited number of equity-supported seats are available each cohort.</p>
     </div>
   </div>
 
-  <div class="pillar-details">
-    <div class="pillar-row">
-      <div class="pillar-row-name">LEAD</div>
-      <div class="pillar-row-desc">
-        <strong>The journey inward, before leading others.</strong><br>
-        LEAD begins with stillness. Not taking charge — but learning to listen. You'll awaken to what's been running you, and start choosing differently, from clarity rather than default.
-      </div>
-    </div>
-    <div class="pillar-row">
-      <div class="pillar-row-name">STAY</div>
-      <div class="pillar-row-desc">
-        <strong>The art of presence under pressure.</strong><br>
-        STAY teaches you to remain. With discomfort. With emotion. With the truth that just surfaced. Most of us escape the moment we feel something — this pillar trains us to stay.
-      </div>
-    </div>
-    <div class="pillar-row">
-      <div class="pillar-row-name">RISE</div>
-      <div class="pillar-row-desc">
-        <strong>Reclaiming authenticity, vision, and purpose.</strong><br>
-        RISE isn't about climbing. It's about alignment — with your values, your fire, your service, and your embodiment. This is where vision meets action.
-      </div>
-    </div>
-    <div class="pillar-row">
-      <div class="pillar-row-name">BURN</div>
-      <div class="pillar-row-desc">
-        <strong>Dismantling what no longer serves.</strong><br>
-        BURN is about disruption. You'll break what's no longer true, unmask the roles you've played, reveal something raw — then nourish what remains. This isn't collapse. It's transformation.
-      </div>
-    </div>
-    <div class="pillar-row">
-      <div class="pillar-row-name">HOLD</div>
-      <div class="pillar-row-desc">
-        <strong>Becoming a safe space for others to heal and transform.</strong><br>
-        HOLD is where the work becomes real. You'll learn to truly listen, to offer space without rescuing, to lean when you're tired, and to deepen — not for intensity, but for integrity.
-      </div>
-    </div>
+  <div style="margin-top:6mm;padding:4mm 5mm;border:1px solid var(--border);border-left:3px solid var(--accent)">
+    <h4 style="color:var(--accent);margin-bottom:2mm">How to Apply</h4>
+    <p style="margin:0">Complete the short application form at <strong style="color:var(--text)">ClassroomDeconstruct.com/apply</strong>. We review each application personally and respond within 5 business days. If accepted, you'll receive location details and your pre-arrival preparation guide.</p>
   </div>
-</section>
+</div>
 
-<!-- JOURNEY -->
-<section class="section" id="journey">
-  <div class="section-header">
-    <span class="label">The Path</span>
-    <h2>10-Week Facilitator Training</h2>
-    <p style="max-width:520px;margin:1rem auto 0">A 10-week immersive training for individuals ready to lead with presence, truth, and depth. Not about teaching — about holding space, embodying truth, and facilitating transformation from the inside out.</p>
-  </div>
-  <div class="journey-grid">
-    <div class="journey-card">
-      <div class="journey-num">01</div>
-      <div class="journey-week">Weeks 01 — 02</div>
-      <h3>Foundation</h3>
-      <p>Establishing the container. Understanding the philosophy, intention, and origins of Classroom Deconstruct. Building psychological safety, trauma sensitivity, and presence.</p>
-    </div>
-    <div class="journey-card">
-      <div class="journey-num">02</div>
-      <div class="journey-week">Weeks 03 — 07</div>
-      <h3>Pillar Embodiment</h3>
-      <p>Deep experiential immersion into each of the five pillars. Each week includes live sessions, peer-led practice, somatic awareness, and journaling integration.</p>
-    </div>
-    <div class="journey-card">
-      <div class="journey-num">03</div>
-      <div class="journey-week">Weeks 08 — 10</div>
-      <h3>Mastery & Integration</h3>
-      <p>Culminating in the final practicum — leading a 60-90 minute session with a real group, observed live and assessed using the CD Rubric. Closing with integration and certification.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ROLE -->
-<section class="section section-alt" id="facilitator">
-  <div class="role-section">
+<!-- ==================== FACILITATOR ==================== -->
+<div class="page">
+  <div class="cols-2" style="align-items:start">
     <div>
-      <p class="role-quote">"You are not here to teach. You are not the authority. You are here to hold the container — with <span>presence</span>, with <span>steadiness</span>, and with <span>care</span>."</p>
+      <span class="label">The Role</span>
+      <h2>Programs Facilitator</h2>
+      <p class="quote">"You are not here to teach. You are not the authority. You are here to hold the container — with <span>presence</span>, with <span>steadiness</span>, and with <span>care</span>."</p>
     </div>
     <div>
-      <ul class="role-list">
+      <h4 style="margin-top:8mm">Core Principles</h4>
+      <ul class="brochure-list">
         <li>You are a space holder, not a performer</li>
         <li>You model presence, not perfection</li>
         <li>You listen more than you speak</li>
@@ -678,67 +507,68 @@ p{
       </ul>
     </div>
   </div>
-</section>
+</div>
 
-<!-- CERTIFICATION -->
-<section class="section" id="certification">
-  <div class="section-header">
-    <span class="label">The Standard</span>
-    <h2>Certification Criteria</h2>
-    <p style="max-width:520px;margin:1rem auto 0">Certification is not about performance. It's about embodiment. Demonstrating that you can hold space with presence, integrity, and care.</p>
-  </div>
-  <div class="cert-grid">
-    <div class="cert-card">
-      <div class="cert-num">01</div>
-      <h4>Complete All Modules</h4>
-      <p>Attend every session. Participate in all peer practice rounds. Engage fully in journaling, group check-ins, and debriefs.</p>
+<!-- ==================== CERTIFICATION ==================== -->
+<div class="page">
+  <span class="label">The Standard</span>
+  <h2>Certification Criteria</h2>
+  <p style="margin-bottom:6mm">Certification is not about performance. It's about embodiment. Demonstrating that you can hold space with presence, integrity, and care.</p>
+
+  <div class="cols-2">
+    <div class="card">
+      <div class="card-num">01</div>
+      <h3>Complete All Modules</h3>
+      <p>Attend every in-person session. Participate in all peer practice rounds. Engage fully in journaling, group check-ins, and debriefs.</p>
     </div>
-    <div class="cert-card">
-      <div class="cert-num">02</div>
-      <h4>Weekly Reflections</h4>
+    <div class="card">
+      <div class="card-num">02</div>
+      <h3>Weekly Reflections</h3>
       <p>Complete workbook reflections for each pillar. Show insight, integration, and awareness. Submit 1-page summary each week.</p>
     </div>
-    <div class="cert-card">
-      <div class="cert-num">03</div>
-      <h4>Final Practicum</h4>
-      <p>Facilitate a 60-90 minute session embodying 1 or more CD pillars. Observed live and assessed using the CD Rubric (Pass: 22+/30).</p>
+    <div class="card">
+      <div class="card-num">03</div>
+      <h3>Final Practicum</h3>
+      <p>Facilitate a 60-90 minute in-person session embodying 1 or more CD pillars. Observed live and assessed using the CD Rubric (Pass: 22+/30).</p>
     </div>
-    <div class="cert-card">
-      <div class="cert-num">04</div>
-      <h4>Peer & Mentor Feedback</h4>
+    <div class="card">
+      <div class="card-num">04</div>
+      <h3>Peer & Mentor Feedback</h3>
       <p>Openly receive group and facilitator feedback. Apply feedback where possible. Demonstrate growth and responsiveness.</p>
     </div>
-    <div class="cert-card">
-      <div class="cert-num">05</div>
-      <h4>5 Core Qualities</h4>
+    <div class="card">
+      <div class="card-num">05</div>
+      <h3>5 Core Qualities</h3>
       <p>Presence, Integrity, Responsiveness, Container-Holding, Self-Awareness. Assessed across 6 dimensions on a 1-5 scale.</p>
     </div>
-    <div class="cert-card">
-      <div class="cert-num">06</div>
-      <h4>Final Reflection</h4>
+    <div class="card">
+      <div class="card-num">06</div>
+      <h3>Final Reflection</h3>
       <p>"What I now hold, and how I will lead." May be written, audio, or video format. Submitted before closing ceremony.</p>
     </div>
   </div>
-</section>
-
-<!-- CTA -->
-<div class="cta" id="contact">
-  <div class="cta-orb"></div>
-  <img src="logo.png" alt="" class="cta-logo">
-  <h2>The Invitation</h2>
-  <p>We don't promise transformation. We promise a safe and supportive space for you to confront your truth. And when that happens, transformation becomes inevitable.</p>
-  <a href="#" class="cta-btn">Apply to Join</a>
 </div>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-brand">
-    <img src="logo.png" alt="">
-    <span>Classroom Deconstruct</span>
+<!-- ==================== BACK COVER ==================== -->
+<div class="page" style="text-align:center;padding-top:25mm">
+  <img src="logo.png" alt="" style="width:70px;opacity:.5;margin-bottom:6mm">
+  <h2 style="margin-bottom:3mm">The Invitation</h2>
+  <p style="max-width:110mm;margin:0 auto 4mm">We don't promise transformation. We promise a safe and supportive space for you to confront your truth. And when that happens, transformation becomes inevitable.</p>
+
+  <div style="margin:8mm auto;max-width:90mm;padding:5mm;border:1px solid var(--border)">
+    <p style="font-size:10pt;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:2mm;font-weight:400">Ready to Apply?</p>
+    <p style="font-size:9pt;color:var(--text-dim);margin:0">Visit <strong style="color:var(--text)">ClassroomDeconstruct.com/apply</strong></p>
+    <p style="font-size:8pt;color:var(--text-faint);margin-top:2mm">Questions? hello@classroomdeconstruct.com</p>
   </div>
-  <div class="footer-tagline">Unlearn. Unmask. Transform.</div>
-  <div class="footer-copy">Classroom Deconstruct — A space where the performance ends, and your real self begins to speak.</div>
-</footer>
+
+  <div class="footer-bar" style="margin-top:15mm">
+    <div style="display:flex;align-items:center;gap:3mm">
+      <img src="logo.png" alt="">
+      <span style="font-family:'Cormorant Garamond',serif;font-size:10pt;color:var(--text)">Classroom Deconstruct</span>
+    </div>
+    <span>Unlearn. Unmask. Transform.</span>
+  </div>
+</div>
 
 </body>
 </html>
