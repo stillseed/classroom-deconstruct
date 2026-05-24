@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classroom Deconstruct — Brochure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+@page {
+  size: A4;
+  margin: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f7f5f2;
+  color: #1a1a1a;
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* HEADER */
+.header {
+  padding: 14mm 18mm 10mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 0.5pt solid #e0ddd8;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-brand img {
+  height: 42px;
+  width: auto;
+}
+
+.header-brand span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15pt;
+  font-weight: 400;
+  letter-spacing: 0.5pt;
+  color: #1a1a1a;
+}
+
+.header-brand span em {
+  color: #b8956a;
+  font-style: normal;
+}
+
+.header-tagline {
+  font-size: 7pt;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  color: #999;
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* HERO */
+.hero {
+  padding: 16mm 18mm 12mm;
+  text-align: center;
+  position: relative;
+}
+
+.hero-logo {
+  width: 90px;
+  margin-bottom: 10mm;
+  opacity: 0.85;
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32pt;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.8pt;
+  color: #1a1a1a;
+  margin-bottom: 4mm;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: #b8956a;
+}
+
+.hero-sub {
+  font-size: 9pt;
+  letter-spacing: 3pt;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 8mm;
+}
+
+.hero-desc {
+  font-size: 9.5pt;
+  color: #666;
+  max-width: 130mm;
+  margin: 0 auto;
+  line-height: 1.9;
+}
+
+/* DIVIDER */
+.divider {
+  width: 30mm;
+  height: 0.5pt;
+  background: #b8956a;
+  margin: 0 auto;
+}
+
+/* PHILOSOPHY */
+.philosophy {
+  padding: 12mm 18mm;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12mm;
+  align-items: start;
+}
+
+.phil-left h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18pt;
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.3pt;
+  margin-bottom: 5mm;
+}
+
+.phil-left p {
+  font-size: 8.5pt;
+  color: #666;
+  line-height: 1.9;
+}
+
+.phil-label {
+  font-size: 6.5pt;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 4mm;
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+}
+
+.phil-label::before {
+  content: '';
+  width: 8mm;
+  height: 0.5pt;
+  background: #b8956a;
+}
+
+.phil-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.phil-card {
+  padding: 5mm 6mm;
+  border: 0.5pt solid #e8e5e0;
+  margin: -0.25pt 0 0 -0.25pt;
+}
+
+.phil-card-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20pt;
+  font-weight: 300;
+  color: #b8956a;
+  opacity: 0.25;
+  line-height: 1;
+  margin-bottom: 2mm;
+}
+
+.phil-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12pt;
+  font-weight: 400;
+  color: #b8956a;
+  margin-bottom: 2mm;
+}
+
+.phil-card-desc {
+  font-size: 7.5pt;
+  color: #888;
+  line-height: 1.7;
+}
+
+/* PILLARS */
+.pillars {
+  padding: 10mm 18mm;
+  background: #faf9f7;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 8mm;
+}
+
+.section-label {
+  font-size: 6.5pt;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 3mm;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18pt;
+  font-weight: 300;
+  letter-spacing: -0.3pt;
+  line-height: 1.1;
+}
+
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4mm;
+}
+
+.pillar-item {
+  text-align: center;
+  padding: 5mm 3mm;
+  border: 0.5pt solid #e8e5e0;
+  background: #fff;
+}
+
+.pillar-item-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14pt;
+  font-weight: 300;
+  letter-spacing: 2pt;
+  color: #1a1a1a;
+  margin-bottom: 2mm;
+}
+
+.pillar-item-elements {
+  font-size: 5.5pt;
+  letter-spacing: 1pt;
+  text-transform: uppercase;
+  color: #aaa;
+  line-height: 1.6;
+}
+
+/* TRAINING */
+.training {
+  padding: 12mm 18mm;
+}
+
+.training-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6mm;
+  margin-top: 8mm;
+}
+
+.training-card {
+  padding: 6mm;
+  border: 0.5pt solid #e8e5e0;
+  position: relative;
+}
+
+.training-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5pt;
+  background: #b8956a;
+}
+
+.training-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22pt;
+  font-weight: 300;
+  color: #b8956a;
+  opacity: 0.15;
+  line-height: 1;
+  margin-bottom: 2mm;
+}
+
+.training-week {
+  font-size: 6pt;
+  letter-spacing: 1.5pt;
+  text-transform: uppercase;
+  color: #b8956a;
+  margin-bottom: 2mm;
+}
+
+.training-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11pt;
+  font-weight: 400;
+  margin-bottom: 2mm;
+}
+
+.training-desc {
+  font-size: 7pt;
+  color: #888;
+  line-height: 1.7;
+}
+
+/* QUOTE */
+.quote {
+  padding: 12mm 18mm;
+  background: #faf9f7;
+  text-align: center;
+}
+
+.quote-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16pt;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.4;
+  max-width: 140mm;
+  margin: 0 auto 6mm;
+  color: #333;
+}
+
+.quote-text span {
+  color: #b8956a;
+}
+
+.quote-attr {
+  font-size: 7pt;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+/* CTA */
+.cta {
+  padding: 14mm 18mm;
+  text-align: center;
+  border-top: 0.5pt solid #e0ddd8;
+}
+
+.cta h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20pt;
+  font-weight: 300;
+  margin-bottom: 4mm;
+}
+
+.cta p {
+  font-size: 8.5pt;
+  color: #888;
+  max-width: 110mm;
+  margin: 0 auto 6mm;
+  line-height: 1.9;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 3mm 8mm;
+  border: 0.5pt solid #b8956a;
+  color: #b8956a;
+  text-decoration: none;
+  font-size: 7pt;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+/* FOOTER */
+.footer {
+  padding: 8mm 18mm;
+  border-top: 0.5pt solid #e0ddd8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+}
+
+.footer-brand img {
+  height: 28px;
+  width: auto;
+  opacity: 0.7;
+}
+
+.footer-brand span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11pt;
+  color: #666;
+}
+
+.footer-info {
+  font-size: 6.5pt;
+  color: #aaa;
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* PRINT */
+@media print {
+  body {
+    background: #fff;
+  }
+  .page {
+    box-shadow: none;
+    margin: 0;
+  }
+}
+
+/* SCREEN PREVIEW */
+@media screen {
+  body {
+    background: #e8e5e0;
+    padding: 20px;
+  }
+  .page {
+    box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-brand">
+      <img src="logo.png" alt="Classroom Deconstruct">
+      <span>Classroom <em>Deconstruct</em></span>
+    </div>
+    <div class="header-tagline">
+      Unlearn. Unmask. Transform.<br>
+      A 10-Week Facilitator Training
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <img src="logo.png" alt="" class="hero-logo">
+    <h1>Unlearn. <em>Unmask.</em> Transform.</h1>
+    <div class="hero-sub">Not from the outside in — from the inside out</div>
+    <div class="hero-desc">
+      A deliberate slowdown — not to promote passivity, but to foster a deeper connection with our authentic selves. Classroom Deconstruct disrupts ingrained patterns and reminds us of the importance of being real.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PHILOSOPHY -->
+  <div class="philosophy">
+    <div class="phil-left">
+      <div class="phil-label">The Foundation</div>
+      <h2>What is Classroom<br>Deconstruct?</h2>
+      <p>Not a course. Not a method. A space where the performance ends, and your real self begins to speak. We don't promise transformation. We promise a safe and supportive space for you to confront your truth.</p>
+    </div>
+    <div class="phil-cards">
+      <div class="phil-card">
+        <div class="phil-card-num">01</div>
+        <div class="phil-card-title">Unlearn</div>
+        <div class="phil-card-desc">Let go of what was never truly yours. The inherited beliefs, the performed roles, the survival patterns that once protected you but now constrain you.</div>
+      </div>
+      <div class="phil-card">
+        <div class="phil-card-num">02</div>
+        <div class="phil-card-title">Unmask</div>
+        <div class="phil-card-desc">Remove the false roles and reveal the raw self. The mask didn't protect you — it protected your image. Beneath it, you are still here.</div>
+      </div>
+      <div class="phil-card">
+        <div class="phil-card-num">03</div>
+        <div class="phil-card-title">Transform</div>
+        <div class="phil-card-desc">Not by becoming someone else, but by returning to who you've always been. Stripping away false layers to reveal the authentic individual within.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILLARS -->
+  <div class="pillars">
+    <div class="section-header">
+      <div class="section-label">The Architecture</div>
+      <div class="section-title">The Five Pillars</div>
+    </div>
+    <div class="pillar-grid">
+      <div class="pillar-item">
+        <div class="pillar-item-name">LEAD</div>
+        <div class="pillar-item-elements">Listen<br>Engage<br>Awaken<br>Discern</div>
+      </div>
+      <div class="pillar-item">
+        <div class="pillar-item-name">STAY</div>
+        <div class="pillar-item-elements">Settle<br>Track<br>Allow<br>Yield</div>
+      </div>
+      <div class="pillar-item">
+        <div class="pillar-item-name">RISE</div>
+        <div class="pillar-item-elements">Root<br>Inspire<br>Serve<br>Embody</div>
+      </div>
+      <div class="pillar-item">
+        <div class="pillar-item-name">BURN</div>
+        <div class="pillar-item-elements">Break<br>Unmask<br>Reveal<br>Nourish</div>
+      </div>
+      <div class="pillar-item">
+        <div class="pillar-item-name">HOLD</div>
+        <div class="pillar-item-elements">Hear<br>Offer<br>Lean<br>Deepen</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAINING -->
+  <div class="training">
+    <div class="section-header">
+      <div class="section-label">The Path</div>
+      <div class="section-title">10-Week Facilitator Training</div>
+    </div>
+    <div class="training-grid">
+      <div class="training-card">
+        <div class="training-num">01</div>
+        <div class="training-week">Weeks 01 — 02</div>
+        <div class="training-title">Foundation</div>
+        <div class="training-desc">Establishing the container. Understanding the philosophy, intention, and origins of Classroom Deconstruct. Building psychological safety, trauma sensitivity, and presence.</div>
+      </div>
+      <div class="training-card">
+        <div class="training-num">02</div>
+        <div class="training-week">Weeks 03 — 07</div>
+        <div class="training-title">Pillar Embodiment</div>
+        <div class="training-desc">Deep experiential immersion into each of the five pillars. Each week includes live sessions, peer-led practice, somatic awareness, and journaling integration.</div>
+      </div>
+      <div class="training-card">
+        <div class="training-num">03</div>
+        <div class="training-week">Weeks 08 — 10</div>
+        <div class="training-title">Mastery & Integration</div>
+        <div class="training-desc">Culminating in the final practicum — leading a 60-90 minute session with a real group, observed live and assessed using the CD Rubric. Closing with integration and certification.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote">
+    <div class="quote-text">"You are not here to teach. You are not the authority. You are here to hold the container — with <span>presence</span>, with <span>steadiness</span>, and with <span>care</span>."</div>
+    <div class="quote-attr">— The Facilitator's Role</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h2>The Invitation</h2>
+    <p>We accept a limited number of facilitators each cohort. If you feel called to this work, we welcome your application.</p>
+    <a href="https://stillseed.github.io/classroom-deconstruct/" class="cta-btn">Apply to Join</a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-brand">
+      <img src="logo.png" alt="">
+      <span>Classroom Deconstruct</span>
+    </div>
+    <div class="footer-info">
+      stillseed.github.io/classroom-deconstruct<br>
+      Unlearn. Unmask. Transform.
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
